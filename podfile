@@ -8,4 +8,5 @@ target 'GoalShare' do
   # Pods for GoalShare
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Database'
 end
