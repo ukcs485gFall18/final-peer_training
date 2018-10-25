@@ -144,6 +144,13 @@
                                 <color key="textColor" red="0.55767595430000005" green="0.31339294010000002" blue="0.40607852779999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Nickname" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3TM-7R-E1i">
+                                <rect key="frame" x="30" y="122" width="315" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" textContentType="name"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -161,6 +168,7 @@
                     <connections>
                         <outlet property="confirmPswdTxt" destination="JNj-1a-fe6" id="Z3d-tY-YCj"/>
                         <outlet property="emailTxt" destination="BFV-Jw-HT5" id="fhZ-UP-xLH"/>
+                        <outlet property="nicknameTxt" destination="3TM-7R-E1i" id="VWX-cu-Hlr"/>
                         <outlet property="pswdTxt" destination="B9T-Vz-Pgw" id="lYp-TU-VYH"/>
                         <outlet property="registerButton" destination="aQj-zP-1IR" id="LrM-TP-OrK"/>
                         <outlet property="warningLbl" destination="6Jf-uX-QoE" id="23x-yK-naI"/>
@@ -169,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Uu-ez-kct" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3305" y="604"/>
+            <point key="canvasLocation" x="3304.8000000000002" y="603.14842578710648"/>
         </scene>
         <!--Start-->
         <scene sceneID="wsf-cX-OUr">
@@ -265,6 +273,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="zUP-9z-cPR" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PEs-Hv-we6">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>

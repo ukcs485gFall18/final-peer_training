@@ -8,9 +8,11 @@
 
 import UIKit
 import Firebase
+import FirebaseDatabase
 
 class RegisterViewController: UIViewController {
 
+    @IBOutlet weak var nicknameTxt: UITextField!
     @IBOutlet weak var registerButton: UIButton!
     
     @IBOutlet weak var emailTxt: UITextField!
@@ -21,6 +23,8 @@ class RegisterViewController: UIViewController {
     
     @IBOutlet weak var warningLbl: UILabel!
     
+    let dbRef = Database.database().reference()
+    
     @IBAction func registerPress(_ sender: Any) {
         if pswdTxt.text == confirmPswdTxt.text{
             if let email = emailTxt.text {
@@ -28,6 +32,8 @@ class RegisterViewController: UIViewController {
                     if error != nil{
                         print(error)
                     }else{
+                        let uid = Auth.auth().currentUser?.uid
+                        self.dbRef.child("Users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
                         self.performSegue(withIdentifier: "goToMain", sender: self)
                     }
                     }
