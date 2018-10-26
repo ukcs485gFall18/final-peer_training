@@ -33,7 +33,7 @@ class RegisterViewController: UIViewController {
                         print(error)
                     }else{
                         let uid = Auth.auth().currentUser?.uid
-                        self.dbRef.child("Users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
+                        self.dbRef.child("users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
                         self.performSegue(withIdentifier: "goToMain", sender: self)
                     }
                     }
