@@ -30,6 +30,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 10
         loginButton.layer.borderColor = #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1)
         
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
 
