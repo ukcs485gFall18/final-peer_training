@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginPress(_ sender: Any) {
         Auth.auth().signIn(withEmail: emailTxt.text!, password: pswdTxt.text!) { (user, error) in
             if error != nil {
-                print(error)
+                print(error ?? "Error logging in with the provided information.")
             }else{
                 self.performSegue(withIdentifier: "goToMain2", sender: self)
             }

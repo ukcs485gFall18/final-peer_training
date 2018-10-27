@@ -30,10 +30,10 @@ class RegisterViewController: UIViewController {
             if let email = emailTxt.text {
                 Auth.auth().createUser(withEmail: email, password: pswdTxt.text!) { (user, error) in
                     if error != nil{
-                        print(error)
+                        print(error ?? "Error registering new user.")
                     }else{
                         let uid = Auth.auth().currentUser?.uid
-                        self.dbRef.child("Users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
+                        self.dbRef.child("users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
                         self.performSegue(withIdentifier: "goToMain", sender: self)
                     }
                     }
