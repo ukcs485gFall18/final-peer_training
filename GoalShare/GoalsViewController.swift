@@ -11,27 +11,43 @@ import Firebase
 import FirebaseDatabase
 
 class GoalsViewController: UIViewController {
-    
     @IBOutlet weak var goalNameTxt: UITextField!
     @IBOutlet weak var goalDescriptionTxt: UITextField!
     
-    let dbref = Database.database().reference()
-    
+    var dbref : DatabaseReference!
+    var gid: Int!
+    var anyValue: AnyObject?
     
     @IBAction func DoneButtonPressed(_ sender: Any) {
-        //This is currently hardcoded for test purposes. Will change
-        let gid = "0"
         if let goalDes = goalDescriptionTxt.text {
-            if goalDes != "" {
-                let uid = Auth.auth().currentUser?.uid
-                self.dbref.child("goals").child(gid).setValue(["gid":1, "goal_description":goalDes])
-            self.dbref.child("goals").child(gid).child("uids").child(uid!).setValue(["completed":"false"])
+            if let goalName = goalNameTxt.text {
+                if (goalDes != "" && goalName != "") {
+                    dbref.child("goals").queryOrdered(byChild: "gid").queryLimited(toLast: 1).observeSingleEvent(of: .value, with: {
+                        snapshot in
+                        guard let fetchedData = snapshot.children.allObjects as? [DataSnapshot] else {return}
+                        for item in fetchedData {
+                            let value = item.value as! [String: AnyObject]
+                            print(value["gid"])
+                            self.anyValue = value["gid"]
+                        }
+                        let maxGid = self.anyValue as? Int
+                        if let retrievedGid = maxGid as? Int {
+                            print("the retrieved value: \(retrievedGid)")
+                            self.gid = retrievedGid + 1
+                        }
+                    })
+                    let uid = Auth.auth().currentUser?.uid
+                    //self.dbref.child("goals").child(gid).setValue(["gid":1, "goal_description":goalDes])
+                    self.dbref.child("goals").child(goalName).setValue(["gid":self.gid, "goal_des":goalDes])
+                        self.dbref.child("goals").child(goalName).child("uids").child(uid!).setValue(["completed":"false"])
+                        print("it should have worked")
+                }
             }
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        dbref =  Database.database().reference()
         // Do any additional setup after loading the view.
     }
     
