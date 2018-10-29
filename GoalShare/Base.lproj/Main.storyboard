@@ -83,9 +83,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibx-76-hmZ">
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibx-76-hmZ">
                                 <rect key="frame" x="0.0" y="123" width="375" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="33"/>
                                 <state key="normal" title="Add New Goal">
                                     <color key="titleColor" red="0.66021696890000003" green="0.1273151928" blue="0.42219195139999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -96,6 +95,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ibx-76-hmZ" firstAttribute="centerY" secondItem="Fu6-8V-az2" secondAttribute="centerY" id="19j-2n-E7w"/>
+                            <constraint firstItem="ibx-76-hmZ" firstAttribute="centerX" secondItem="Fu6-8V-az2" secondAttribute="centerX" id="iWd-At-k8n"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Fu6-8V-az2"/>
                     </view>
                 </viewController>
@@ -111,34 +114,20 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="On6-2z-nBH">
-                                <rect key="frame" x="0.0" y="135" width="25" height="22"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Goal" borderStyle="line" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhm-jB-KVN">
-                                <rect key="frame" x="0.0" y="92" width="375" height="28"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cwp-AQ-vs1">
-                                <rect key="frame" x="0.0" y="135" width="375" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cwp-AQ-vs1">
+                                <rect key="frame" x="16" y="135" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3V7-nX-wiA">
-                                <rect key="frame" x="0.0" y="173" width="375" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3V7-nX-wiA">
+                                <rect key="frame" x="16" y="173" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-ga-FTg">
-                                <rect key="frame" x="0.0" y="520" width="375" height="68"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-ga-FTg">
+                                <rect key="frame" x="16" y="496" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="35"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" red="0.66021696891191706" green="0.12731519283116863" blue="0.42219195139488264" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -148,8 +137,32 @@
                                     <segue destination="ep0-Px-tBd" kind="show" id="KPe-hL-4b1"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Goal" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhm-jB-KVN">
+                                <rect key="frame" x="16" y="81" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="3V7-nX-wiA" secondAttribute="trailing" constant="16" id="39C-PN-h3r"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="Cwp-AQ-vs1" secondAttribute="trailing" constant="16" id="9oD-zL-smc"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="oCx-ga-FTg" secondAttribute="trailing" constant="16" id="BBy-2m-sFP"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="dhm-jB-KVN" secondAttribute="trailing" constant="16" id="CxX-A6-U83"/>
+                            <constraint firstItem="3V7-nX-wiA" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="Hcs-hF-VOE"/>
+                            <constraint firstItem="3V7-nX-wiA" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="153" id="Kap-Xz-QSh"/>
+                            <constraint firstItem="oCx-ga-FTg" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="O9B-20-Cxw"/>
+                            <constraint firstItem="3V7-nX-wiA" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="XQh-xq-le8"/>
+                            <constraint firstItem="Cwp-AQ-vs1" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="a0F-Le-0Bm"/>
+                            <constraint firstItem="oCx-ga-FTg" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="476" id="abO-5G-Gv9"/>
+                            <constraint firstItem="Cwp-AQ-vs1" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="afq-gr-PCg"/>
+                            <constraint firstItem="Cwp-AQ-vs1" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="115" id="kxE-H7-MgX"/>
+                            <constraint firstItem="oCx-ga-FTg" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="lhM-W8-pIj"/>
+                            <constraint firstItem="dhm-jB-KVN" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="61" id="swM-pa-6qH"/>
+                            <constraint firstItem="dhm-jB-KVN" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="wlL-JI-zY9"/>
+                            <constraint firstItem="dhm-jB-KVN" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="xLk-B4-OLn"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="G3d-c9-amJ"/>
                     </view>
                     <connections>
@@ -421,7 +434,6 @@
         <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Cf4-Ue-cL9"/>
         <segue reference="KPe-hL-4b1"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -27,21 +27,17 @@ class GoalsViewController: UIViewController {
                         guard let fetchedData = snapshot.children.allObjects as? [DataSnapshot] else {return}
                         for item in fetchedData {
                             let value = item.value as! [String: AnyObject]
-                            print(value["gid"])
                             self.anyValue = value["gid"]
                         }
                         let maxGid = self.anyValue as? Int
                         if let retrievedGid = maxGid as? Int {
-                            print("the retrieved value: \(retrievedGid)")
                             self.gid = retrievedGid + 1
                         } else {
                             self.gid = 0
                         }
                         let uid = Auth.auth().currentUser?.uid
-                        //self.dbref.child("goals").child(gid).setValue(["gid":1, "goal_description":goalDes])
                         self.dbref.child("goals").child(goalName).setValue(["gid":self.gid, "goal_des":goalDes])
                         self.dbref.child("goals").child(goalName).child("uids").child(uid!).setValue(["completed":"false"])
-                        print("it should have worked")
                     })
                 }
             }
@@ -49,6 +45,7 @@ class GoalsViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         dbref =  Database.database().reference()
         // Do any additional setup after loading the view.
     }
