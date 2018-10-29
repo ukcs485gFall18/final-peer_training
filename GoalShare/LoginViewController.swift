@@ -18,7 +18,7 @@ class LoginViewController: UIViewController {
     @IBAction func loginPress(_ sender: Any) {
         Auth.auth().signIn(withEmail: emailTxt.text!, password: pswdTxt.text!) { (user, error) in
             if error != nil {
-                print(error)
+                print(error ?? "Error logging in with the provided information.")
             }else{
                 self.performSegue(withIdentifier: "goToMain2", sender: self)
             }
@@ -30,6 +30,7 @@ class LoginViewController: UIViewController {
         loginButton.layer.cornerRadius = 10
         loginButton.layer.borderColor = #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1)
         
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
 

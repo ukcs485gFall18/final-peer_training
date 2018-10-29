@@ -30,7 +30,7 @@ class RegisterViewController: UIViewController {
             if let email = emailTxt.text {
                 Auth.auth().createUser(withEmail: email, password: pswdTxt.text!) { (user, error) in
                     if error != nil{
-                        print(error)
+                        print(error ?? "Error registering new user.")
                     }else{
                         let uid = Auth.auth().currentUser?.uid
                         self.dbRef.child("users").child(uid!).setValue(["uid": uid, "uname": self.nicknameTxt.text!])
@@ -49,6 +49,8 @@ class RegisterViewController: UIViewController {
         registerButton.layer.borderWidth = 2
         registerButton.layer.cornerRadius = 10
         registerButton.layer.borderColor = #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1)
+   
+            self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
     
 
