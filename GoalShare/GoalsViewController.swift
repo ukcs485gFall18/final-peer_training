@@ -34,13 +34,15 @@ class GoalsViewController: UIViewController {
                         if let retrievedGid = maxGid as? Int {
                             print("the retrieved value: \(retrievedGid)")
                             self.gid = retrievedGid + 1
+                        } else {
+                            self.gid = 0
                         }
-                    })
-                    let uid = Auth.auth().currentUser?.uid
-                    //self.dbref.child("goals").child(gid).setValue(["gid":1, "goal_description":goalDes])
-                    self.dbref.child("goals").child(goalName).setValue(["gid":self.gid, "goal_des":goalDes])
+                        let uid = Auth.auth().currentUser?.uid
+                        //self.dbref.child("goals").child(gid).setValue(["gid":1, "goal_description":goalDes])
+                        self.dbref.child("goals").child(goalName).setValue(["gid":self.gid, "goal_des":goalDes])
                         self.dbref.child("goals").child(goalName).child("uids").child(uid!).setValue(["completed":"false"])
                         print("it should have worked")
+                    })
                 }
             }
         }
