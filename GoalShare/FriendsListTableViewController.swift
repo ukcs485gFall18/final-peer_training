@@ -1,21 +1,20 @@
 //
-//  GoalListViewController.swift
+//  FriendsListTableViewController.swift
+//  GoalShare
 //
+//  Created by Bryan Willis on 11/5/18.
+//  Copyright © 2018 Bryan Willis. All rights reserved.
 //
-//  Created by Hurst, Conner on 10/29/18.
-//
+
 import UIKit
 import Firebase
 import FirebaseDatabase
 
-class GoalListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class FriendsListTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var tableView: UITableView!
     
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
-    //var currentUserId = Auth.auth().currentUser?.uid
-    
     var postData = [String]()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -30,18 +29,12 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         // Fill cell from postData
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell?.textLabel?.text = postData[indexPath.row]
-        
-        // Fill with checkmark if the goal is completed
-        //        let completedString = String(describing: ref!.child("goals").child(postData[indexPath.row]).child("uids").child(currentUserId!).child("completed"))
-        //        if (completedString == "true"){
-        //            cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-        //        }
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        //Set current user ID
+        /*//Set current user ID
         let currentUserId = Auth.auth().currentUser?.uid
         
         // Get text for current row
@@ -49,13 +42,13 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         let cellName = currentCell.textLabel!.text
         
         // Set value to true
-        ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+        ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])*/
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        /*
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -85,17 +78,6 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             self.tableView.reloadData()
             //self.postData.append()
         })
-        
+        */
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

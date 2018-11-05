@@ -2,8 +2,8 @@
 //  GoalsViewController.swift
 //  GoalShare
 //
-//  Created by Seanna Lea LoBue on 10/20/18.
-//  Copyright © 2018 Seanna Lea LoBue. All rights reserved.
+//  Created by Bryan Willis on 10/20/18.
+//  Copyright © 2018 Bryan Willis. All rights reserved.
 //
 
 import UIKit
@@ -49,16 +49,4 @@ class GoalsViewController: UIViewController {
         dbref =  Database.database().reference()
         // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
