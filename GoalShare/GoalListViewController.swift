@@ -15,6 +15,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
+    //var currentUserId = Auth.auth().currentUser?.uid
     
     var postData = [String]()
     
@@ -24,10 +25,32 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        //Set current user ID
+        let currentUserId = Auth.auth().currentUser?.uid
+        
+        // Fill cell from postData
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell?.textLabel?.text = postData[indexPath.row]
         
+        // Fill with checkmark if the goal is completed
+//        let completedString = String(describing: ref!.child("goals").child(postData[indexPath.row]).child("uids").child(currentUserId!).child("completed"))
+//        if (completedString == "true"){
+//            cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+//        }
         return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        //Set current user ID
+        let currentUserId = Auth.auth().currentUser?.uid
+        
+        // Get text for current row
+        let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
+        let cellName = currentCell.textLabel!.text
+        
+        // Set value to true
+        ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
     }
     
     override func viewDidLoad() {
@@ -40,7 +63,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         //Set the firebase reference
         ref = Database.database().reference()
         
-        // GET CURRENT USER'S ID
+        //Set current user ID
         let currentUserId = Auth.auth().currentUser?.uid
         
         //Retrieve posts and listen for changes
