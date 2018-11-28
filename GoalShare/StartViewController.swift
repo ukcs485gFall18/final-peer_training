@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class StartViewController: UIViewController {
 
@@ -24,6 +25,13 @@ class StartViewController: UIViewController {
      registerButton.layer.borderColor = #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        if(Auth.auth().currentUser != nil){
+            self.performSegue(withIdentifier: "skipLogin", sender: self)
+        }else{
+            print("User not authenticated. Proceding to load login-registration screen.")
+        }
+    }
 
 }
 
