@@ -39,23 +39,27 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             if (completedString == "true"){
                 cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
             }
+            else{
+                cell?.accessoryType = UITableViewCell.AccessoryType.none
+            }
+            
         })
         
         return cell!
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {
-        //Set current user ID
-        let currentUserId = Auth.auth().currentUser?.uid
-        
-        // Get text for current row
-        let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
-        let cellName = currentCell.textLabel!.text
-        
-        // Set value to true
-        ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+//    {
+//        //Set current user ID
+//        let currentUserId = Auth.auth().currentUser?.uid
+//
+//        // Get text for current row
+//        let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
+//        let cellName = currentCell.textLabel!.text
+//
+//        // Set value to true
+//        ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +96,42 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool
+    {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]?
+    {
+        //Array of action objects
+        let complete = UITableViewRowAction(style: .normal, title: "Complete") { action, index in
+            print("complete button tapped")
+            
+            //Set current user ID
+            let currentUserId = Auth.auth().currentUser?.uid
+            
+            // Get text for current row
+            let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
+            let cellName = currentCell.textLabel!.text
+            
+            // Set value to true
+            self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+            
+        }
+        complete.backgroundColor = .lightGray
+        
+        let details = UITableViewRowAction(style: .normal, title: "Details") { action, index in
+            print("details button tapped")
+        }
+        details.backgroundColor = .orange
+        
+        
+        return [complete, details]
+    }
     /*
      // MARK: - Navigation
      // In a storyboard-based application, you will often want to do a little preparation before navigation
