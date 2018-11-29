@@ -14,6 +14,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
+    var completedHandle:DatabaseHandle?
     //var currentUserId = Auth.auth().currentUser?.uid
     
     var postData = [String]()
@@ -31,11 +32,15 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell?.textLabel?.text = postData[indexPath.row]
         
-        // Fill with checkmark if the goal is completed
-        //        let completedString = String(describing: ref!.child("goals").child(postData[indexPath.row]).child("uids").child(currentUserId!).child("completed"))
-        //        if (completedString == "true"){
-        //            cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
-        //        }
+        //Fill with checkmark if the goal is completed
+        completedHandle = ref?.child("goals").child(postData[indexPath.row]).child("uids").child(currentUserId!).child("completed").observe(.value, with: { (DataSnapshot) in
+            let completedString = DataSnapshot.value as? String
+            
+            if (completedString == "true"){
+                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+            }
+        })
+        
         return cell!
     }
     
@@ -83,7 +88,6 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
             self.tableView.reloadData()
-            //self.postData.append()
         })
         
     }
