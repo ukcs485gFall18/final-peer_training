@@ -15,9 +15,9 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
     var completedHandle:DatabaseHandle?
-    //var currentUserId = Auth.auth().currentUser?.uid
     
     var postData = [String]()
+    var postLogId = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return postData.count
@@ -120,6 +120,36 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             
             // Set value to true
             self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+            
+//            // Store in log
+//            // increment logid
+//            var logId = 0
+            
+//            //get current date
+//            let date = Date()
+//            let formatter = DateFormatter()
+//            formatter.dateFormat = "MM.dd.yyyy"
+//            let currentDate = formatter.string(from: date)
+            
+//            // get goalid
+//            var goalId = 0
+//            self.databaseHandle = self.ref?.child("goals").child(cellName!).child("gid").observe(.value, with: { (DataSnapshot) in
+//                goalId = (DataSnapshot.value as? Int)!
+//            })
+            
+//            self.ref?.child("goalHistory").child(currentUserId!).observe(.value, with: { (snapshot) in
+//                // increment logid
+//                for id in snapshot.children {
+//                    let idSnap = id as! DataSnapshot
+//                    let idInt = Int(idSnap.key)
+//                    if (idInt! > logId){
+//                        logId = idInt!
+//                    }
+//                }
+//                logId += 1
+//                self.postLogId = String(logId)
+//            })
+//            var logIdQuery = self.ref!.child("goalHistory").child(currentUserId!).queryOrderedByKey().queryLimited(toLast: 1)
             
         }
         complete.backgroundColor = .lightGray
