@@ -61,6 +61,30 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         //Set current user ID
         let currentUserId = Auth.auth().currentUser?.uid
         
+//        //get current date
+//        let date = Date()
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "yyyyMMdd"
+//        let currentDate = formatter.string(from: date)
+//
+//        // mark goals as false if they haven't been completed today
+//        databaseHandle = ref?.child("goalHistory").child(currentUserId!).observe(.value, with: { (snapshot) in
+//            for gid in snapshot.children {
+//                let gidSnap = gid as! DataSnapshot
+//                var completed = false
+//                for date in gidSnap.children {
+//                    let dateSnap = date as! DataSnapshot
+//                    if (dateSnap.key == currentDate){
+//                        completed = true
+//                    }
+//                }
+//                if (completed == false) {
+//                    // Set value to false
+//                    //self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+//                }
+//            }
+//        })
+        
         //Retrieve posts and listen for changes
         databaseHandle = ref?.child("goals").observe(.childAdded, with: { (snapshot) in
             
@@ -108,45 +132,33 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             // Set value to true
             self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
             
-            // Store in log
-            //get current date
+            // store in log
+            // get current date
             let date = Date()
             let formatter = DateFormatter()
-            formatter.dateFormat = "MM.dd.yyyy"
+            formatter.dateFormat = "yyyyMMdd"
             let currentDate = formatter.string(from: date)
             
-            // get goalid
+            // get goalid and then log data
             var goalId = 0
             self.databaseHandle = self.ref?.child("goals").child(cellName!).child("gid").observe(.value, with: { (DataSnapshot) in
                 goalId = (DataSnapshot.value as? Int)!
-            })
-
-            // get incremented logid and log data
-            var logIdQuery = self.ref!.child("goalHistory").child(currentUserId!).queryOrderedByKey().queryLimited(toLast: 1)
-            logIdQuery.observeSingleEvent(of: .value, with: {
-                snapshot in
-                guard let fetchedData = snapshot.children.allObjects as? [DataSnapshot] else {return}
-                var key = ""
-                for item in fetchedData {
-                    key = item.key
-                }
-                if let maxLogId = Int(key) {
-                    self.postLogId = String(maxLogId + 1)
-                } else {
-                    self.postLogId = String(0)
-                }
-                
-                // log completed goal
-                self.ref?.child("goalHistory").child(currentUserId!).child(self.postLogId).setValue(["completeDate": currentDate, "gid": goalId])
+                self.ref?.child("goalHistory").child(currentUserId!).child(String(goalId)).child(currentDate).setValue(["true"])
             })
         }
         complete.backgroundColor = .lightGray
         
         let details = UITableViewRowAction(style: .normal, title: "Details") { action, index in
+            
+            // get cellname
+            let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
+            let cellName = currentCell.textLabel!.text
+            
+            // segue to description
+            self.performSegue(withIdentifier: "goalDescription", sender: cellName)
             print("details button tapped")
         }
         details.backgroundColor = .orange
-        
         
         return [complete, details]
     }

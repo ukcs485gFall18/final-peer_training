@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -412,11 +412,55 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="0m5-gZ-cJo" id="kpK-wI-mP4"/>
+                        <segue destination="rVe-UU-myR" kind="show" identifier="goalDescription" id="rNn-a7-AH8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5M-LI-q6x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1766" y="1693"/>
+        </scene>
+        <!--Goal Details View Controller-->
+        <scene sceneID="NaM-Au-MWh">
+            <objects>
+                <viewController id="rVe-UU-myR" customClass="GoalDetailsViewController" customModule="GoalShare" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vxB-TU-Rtu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="H9I-tU-Tbs">
+                                <rect key="frame" x="61" y="39" width="253" height="29"/>
+                                <segments>
+                                    <segment title="Week"/>
+                                    <segment title="Month"/>
+                                    <segment title="Year"/>
+                                </segments>
+                                <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWA-p5-Bf9" customClass="BasicBarChart" customModule="GoalShare" customModuleProvider="target">
+                                <rect key="frame" x="16" y="151" width="343" height="246"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="centerX" secondItem="H9I-tU-Tbs" secondAttribute="centerX" id="3Bu-GW-jy5"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="leading" secondItem="j8f-EM-qqI" secondAttribute="leading" constant="61" id="BPB-eZ-OCU"/>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="leading" secondItem="vxB-TU-Rtu" secondAttribute="leadingMargin" id="BfO-dl-P2n"/>
+                            <constraint firstItem="j8f-EM-qqI" firstAttribute="bottom" secondItem="lWA-p5-Bf9" secondAttribute="bottom" constant="270" id="FjC-d8-Ab4"/>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="top" secondItem="H9I-tU-Tbs" secondAttribute="bottom" constant="84" id="HsH-SF-NIy"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="centerX" secondItem="vxB-TU-Rtu" secondAttribute="centerX" id="eBz-DJ-rP6"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="top" secondItem="j8f-EM-qqI" secondAttribute="top" constant="19" id="vBs-Yu-VZT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="j8f-EM-qqI"/>
+                    </view>
+                    <connections>
+                        <outlet property="BarChart" destination="lWA-p5-Bf9" id="KcY-b8-Tl8"/>
+                        <outlet property="timeFrameSeg" destination="H9I-tU-Tbs" id="lsh-Mz-9kI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zF0-3X-aSQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1765.5999999999999" y="2485.9070464767619"/>
         </scene>
         <!--Friends-->
         <scene sceneID="dta-HG-Qpq">
@@ -559,15 +603,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="goals@1" width="37.5" height="37.5"/>
-        <image name="home@1" width="37.5" height="37.5"/>
-        <image name="usergroups@1" width="37.5" height="37.5"/>
+        <image name="goals@1" width="25" height="25"/>
+        <image name="home@1" width="25" height="25"/>
+        <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KnS-fZ-S02"/>
         <segue reference="xLF-yF-LNk"/>
         <segue reference="nvB-5R-Awj"/>
         <segue reference="c9J-EE-5tj"/>
-        <segue reference="6qa-2Q-2fL"/>
+        <segue reference="4Aq-Xl-yJQ"/>
     </inferredMetricsTieBreakers>
 </document>
