@@ -10,6 +10,8 @@
 		CC29AEA34DA8C8C08DCCB7B4 /* Pods_GoalShare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F1C482918C84738A9821742 /* Pods_GoalShare.framework */; };
 		CE1CA25021905E7F008F9F33 /* GoalListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CA24F21905E7F008F9F33 /* GoalListViewController.swift */; };
 		CE1CA25221906D38008F9F33 /* FriendsListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1CA25121906D38008F9F33 /* FriendsListTableViewController.swift */; };
+		FE1562C821B4456B00A7DB4A /* FriendModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1562C721B4456B00A7DB4A /* FriendModel.swift */; };
+		FE1562CA21B4458400A7DB4A /* GoalModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE1562C921B4458400A7DB4A /* GoalModel.swift */; };
 		FE6FBA5521701F6800C9F4E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FBA5421701F6800C9F4E6 /* AppDelegate.swift */; };
 		FE6FBA5721701F6800C9F4E6 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE6FBA5621701F6800C9F4E6 /* StartViewController.swift */; };
 		FE6FBA5A21701F6800C9F4E6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FE6FBA5821701F6800C9F4E6 /* Main.storyboard */; };
@@ -30,6 +32,8 @@
 		A09ADC3D4A54D4689836461B /* Pods-GoalShare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoalShare.release.xcconfig"; path = "Pods/Target Support Files/Pods-GoalShare/Pods-GoalShare.release.xcconfig"; sourceTree = "<group>"; };
 		CE1CA24F21905E7F008F9F33 /* GoalListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalListViewController.swift; sourceTree = "<group>"; };
 		CE1CA25121906D38008F9F33 /* FriendsListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListTableViewController.swift; sourceTree = "<group>"; };
+		FE1562C721B4456B00A7DB4A /* FriendModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendModel.swift; sourceTree = "<group>"; };
+		FE1562C921B4458400A7DB4A /* GoalModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalModel.swift; sourceTree = "<group>"; };
 		FE6FBA5121701F6800C9F4E6 /* GoalShare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoalShare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FE6FBA5421701F6800C9F4E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FE6FBA5621701F6800C9F4E6 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
@@ -97,15 +101,17 @@
 			isa = PBXGroup;
 			children = (
 				FE6FBA5421701F6800C9F4E6 /* AppDelegate.swift */,
-				FE6FBA5821701F6800C9F4E6 /* Main.storyboard */,
-				CE1CA25121906D38008F9F33 /* FriendsListTableViewController.swift */,
-				FE8727BC217DCA150094899D /* MainViewController.swift */,
-				FE8727BA217C130E0094899D /* RegisterViewController.swift */,
-				FE8727B8217C12BF0094899D /* LoginViewController.swift */,
+				FE1562C721B4456B00A7DB4A /* FriendModel.swift */,
 				FE8727B6217BFDC40094899D /* FriendsViewController.swift */,
-				FE6FBA5621701F6800C9F4E6 /* StartViewController.swift */,
+				CE1CA25121906D38008F9F33 /* FriendsListTableViewController.swift */,
+				FE1562C921B4458400A7DB4A /* GoalModel.swift */,
 				FE8727B4217BFD7F0094899D /* GoalsViewController.swift */,
 				CE1CA24F21905E7F008F9F33 /* GoalListViewController.swift */,
+				FE6FBA5621701F6800C9F4E6 /* StartViewController.swift */,
+				FE8727B8217C12BF0094899D /* LoginViewController.swift */,
+				FE8727BA217C130E0094899D /* RegisterViewController.swift */,
+				FE8727BC217DCA150094899D /* MainViewController.swift */,
+				FE6FBA5821701F6800C9F4E6 /* Main.storyboard */,
 				FE6FBA5E21701F6800C9F4E6 /* Assets.xcassets */,
 				FE6FBA6021701F6800C9F4E6 /* LaunchScreen.storyboard */,
 				FE6FBA6321701F6800C9F4E6 /* Info.plist */,
@@ -243,7 +249,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FE1562C821B4456B00A7DB4A /* FriendModel.swift in Sources */,
 				FE8727B9217C12BF0094899D /* LoginViewController.swift in Sources */,
+				FE1562CA21B4458400A7DB4A /* GoalModel.swift in Sources */,
 				CE1CA25021905E7F008F9F33 /* GoalListViewController.swift in Sources */,
 				FE6FBA5721701F6800C9F4E6 /* StartViewController.swift in Sources */,
 				FE8727BB217C130E0094899D /* RegisterViewController.swift in Sources */,
