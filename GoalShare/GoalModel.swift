@@ -13,12 +13,12 @@ import Firebase
 class GoalModel : NSObject {
     var gid : Int
     var goal_desc : String
-    var completeStatus : String
+    var complete : String
     
     init(snap: DataSnapshot){
         let goalDict = snap.value as! [String: Any]
         self.gid = goalDict["gid"] as! Int
         self.goal_desc = goalDict["goal_des"] as! String
-        self.completeStatus = "false"
+        self.complete = ""
     }
 }

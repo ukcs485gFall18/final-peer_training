@@ -13,12 +13,16 @@ import Firebase
 class FriendModel : NSObject {
     var uid : String = ""
     var nickName : String = ""
+    private var _goals : [GoalModel]
     
-    var goals : [GoalModel]
-    
+    var goals : [GoalModel] {
+        get { return _goals}
+        set { _goals = [GoalModel]() }
+    }
+
     init(snap : DataSnapshot){
         self.uid = snap.key
         self.nickName = snap.value as! String
-        self.goals = [GoalModel]()
+        _goals = [GoalModel]()
     }
 }
