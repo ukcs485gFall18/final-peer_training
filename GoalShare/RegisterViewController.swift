@@ -53,5 +53,4 @@ class RegisterViewController: UIViewController {
             self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
     }
 
-
 }

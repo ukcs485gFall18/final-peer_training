@@ -29,9 +29,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     
     // View Display and Data Functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.summaryTableView.reloadData()
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         summaryTableView.delegate = self
         summaryTableView.dataSource = self
         
@@ -41,26 +47,41 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("/(curentUser) not defined.")
             fatalError("Current User is not defined.")
         }
-        
-        friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
-            for friend in snapshot.children{
-                let friendSnap = friend as! DataSnapshot
-                let friend = FriendModel(snap: friendSnap)
-                self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
-                var goals = [GoalModel]()
-                    for goal in goalSnapshot.children {
-                        print("*** Goal info - \(String(describing: goal))")
-                        let fgoal = GoalModel(snap: goal as! DataSnapshot)
-                        goals.append(fgoal)
-                    }
-                    friend.goals = goals
-                    print("*** COUNT of friendGoals - \(friend.goals.count)")
+
+        if(friendData.count == 0){
+            friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
+                for friend in snapshot.children{
+                    let friendSnap = friend as! DataSnapshot
+                    let friend = FriendModel(snap: friendSnap)
+                    self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
+                        var goals = [GoalModel]()
+                        for goal in goalSnapshot.children {
+                            let fgoal = GoalModel(snap: goal as! DataSnapshot)
+                            goals.append(fgoal)
+                        }
+                        friend.goals = goals
+                        friend.calculateCompletionRate(goals)
+                        //print("*** Count of friend goals = \(friend.goals.count)")
                     })
-                self.friendData.append(friend)
+                    if(!self.friendData.contains(friend)){
+                        self.friendData.append(friend)
+                    }
+                    self.items[0] = self.friendData
+                    self.summaryTableView.reloadData()
                 }
-            self.items[0] = self.friendData
-            self.summaryTableView.reloadData()
-        })
+            })
+        }
+        
+        if(goalData.count == 0){
+            goalHandle = dbref?.child("Goals/\(currentUser)").observe(.childAdded, with: { (goalSnapshot) in
+                for goal in goalSnapshot.children{
+                    let ugoal = GoalModel(snap: goal as! DataSnapshot)
+                    self.goalData.append(ugoal)
+                }
+                self.items[1] = self.goalData
+                self.summaryTableView.reloadData()
+            })
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -75,10 +96,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let maxRows = 5
-        //print("*** ITEMS SECTION *** \(section)")
         if items[section].count > 5{
             return maxRows
-        }else{
+        }else if items[section].count == 0 {
+            return 1
+        }else {
             return items[section].count
         }
     }
@@ -86,9 +108,26 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
         if(indexPath.section == 0){
-            let friend = items[indexPath.section][indexPath.row] as! FriendModel
-            cell?.textLabel?.text = friend.nickName
-            cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completeRate)% of their goals."
+            if friendData.count > 0 {
+                let friend = items[indexPath.section][indexPath.row] as! FriendModel
+                cell?.textLabel?.text = friend.nickName
+                print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
+                cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+            }else{
+                cell?.textLabel?.text = "No Friends Found"
+                cell?.detailTextLabel?.text = "Go to the Friends menu to add a friend."
+            }
+        }else if(indexPath.section == 1){
+            if goalData.count > 0 {
+                let goal = items[indexPath.section][indexPath.row] as! GoalModel
+                cell?.textLabel?.text = goal.goal_desc
+                let completionStatus = (goal.complete == "true" ? "completed" : "not completed")
+                print("*** \(goal.goalName) is \(goal.complete) for today.")
+                cell?.detailTextLabel?.text = "\(goal.goalName) is \(completionStatus) for today."
+            }else{
+                cell?.textLabel?.text = "No Goals Found"
+                cell?.detailTextLabel?.text = "Go to the Goals menu to create your first Goal."
+            }
         }else{
             cell?.textLabel?.text = "Testing"
             cell?.detailTextLabel?.text = "No Completion Found"
