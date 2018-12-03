@@ -47,23 +47,22 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("/(curentUser) not defined.")
             fatalError("Current User is not defined.")
         }
-
+        var goals = [GoalModel]()
         if(friendData.count == 0){
             friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
                 for friend in snapshot.children{
                     let friendSnap = friend as! DataSnapshot
                     let friend = FriendModel(snap: friendSnap)
                     self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
-                        var goals = [GoalModel]()
                         for goal in goalSnapshot.children {
                             let fgoal = GoalModel(snap: goal as! DataSnapshot)
                             goals.append(fgoal)
                         }
                         friend.goals = goals
-                        friend.calculateCompletionRate(goals)
                         //print("*** Count of friend goals = \(friend.goals.count)")
                     })
                     if(!self.friendData.contains(friend)){
+                        friend.completePercent = friend.calculateCompletionRate()
                         self.friendData.append(friend)
                     }
                     self.items[0] = self.friendData
@@ -82,6 +81,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.summaryTableView.reloadData()
             })
         }
+        self.summaryTableView.reloadData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -111,6 +111,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             if friendData.count > 0 {
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
                 cell?.textLabel?.text = friend.nickName
+                friend.completePercent = friend.calculateCompletionRate()
                 print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
                 cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
             }else{
@@ -122,15 +123,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let goal = items[indexPath.section][indexPath.row] as! GoalModel
                 cell?.textLabel?.text = goal.goal_desc
                 let completionStatus = (goal.complete == "true" ? "completed" : "not completed")
-                print("*** \(goal.goalName) is \(goal.complete) for today.")
                 cell?.detailTextLabel?.text = "\(goal.goalName) is \(completionStatus) for today."
             }else{
                 cell?.textLabel?.text = "No Goals Found"
                 cell?.detailTextLabel?.text = "Go to the Goals menu to create your first Goal."
             }
         }else{
-            cell?.textLabel?.text = "Testing"
-            cell?.detailTextLabel?.text = "No Completion Found"
+            cell?.textLabel?.text = "Error"
+            cell?.detailTextLabel?.text = "No data found"
         }
         return cell!
     }
