@@ -17,6 +17,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     var dbref : DatabaseReference!
     let currentUser = Auth.auth().currentUser?.uid
     var friendHandle : DatabaseHandle?
+    var goalHandle : DatabaseHandle?
     
     // setting datasource for summary
     var friendData = [FriendModel]()
@@ -45,13 +46,21 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             for friend in snapshot.children{
                 let friendSnap = friend as! DataSnapshot
                 let friend = FriendModel(snap: friendSnap)
+                self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
+                var goals = [GoalModel]()
+                    for goal in goalSnapshot.children {
+                        print("*** Goal info - \(String(describing: goal))")
+                        let fgoal = GoalModel(snap: goal as! DataSnapshot)
+                        goals.append(fgoal)
+                    }
+                    friend.goals = goals
+                    })
                 self.friendData.append(friend)
-                print("*** Friend Snap values \(String(describing: friendSnap.value))")
-            }
+                }
             self.items[0] = self.friendData
-            print("*** COUNT of friendData - \(self.friendData.count)")
+            //print("*** COUNT of friendData - \(self.friendData.count)")
             self.summaryTableView.reloadData()
-            })
+        })
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -79,8 +88,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         if(indexPath.section == 0){
             let friend = items[indexPath.section][indexPath.row] as! FriendModel
             cell?.textLabel?.text = friend.nickName
+            cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completeRate)% of their goals."
         }else{
             cell?.textLabel?.text = "Testing"
+            cell?.detailTextLabel?.text = "No Completion Found"
         }
         return cell!
     }
