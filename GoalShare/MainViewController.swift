@@ -54,11 +54,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                         goals.append(fgoal)
                     }
                     friend.goals = goals
+                    print("*** COUNT of friendGoals - \(friend.goals.count)")
                     })
                 self.friendData.append(friend)
                 }
             self.items[0] = self.friendData
-            //print("*** COUNT of friendData - \(self.friendData.count)")
             self.summaryTableView.reloadData()
         })
     }

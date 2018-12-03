@@ -15,12 +15,12 @@ class FriendModel : NSObject {
     var nickName : String = ""
     private var _goals : [GoalModel]
     private var _completePercent : Double
-    var totalGoals = Int()
-    var completeGoals = Int()
+    private var totalGoals = Int()
+    private var completeGoals = Int()
     
     var goals : [GoalModel] {
         get { return _goals}
-        set { _goals = [GoalModel]() }
+        set ( goalArray ) { _goals = goalArray }
     }
     
     var completeRate : Double {
@@ -42,6 +42,7 @@ class FriendModel : NSObject {
         }
     }
 
+    // Constructor
     init(snap : DataSnapshot){
         self.uid = snap.key
         self.nickName = snap.value as! String

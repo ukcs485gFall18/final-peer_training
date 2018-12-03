@@ -4,7 +4,7 @@
 //
 //  Created by Seanna Lea LoBue on 12/1/18.
 //  Copyright © 2018 Seanna Lea LoBue. All rights reserved.
-//
+//  Updated to reflect changes in the Firebase data structure
 
 import Foundation
 import UIKit
@@ -16,6 +16,7 @@ class GoalModel : NSObject {
     var goal_desc : String
     var complete : String
     
+    // Constructor
     init(snap: DataSnapshot){
         let goalDict = snap.value as! [String : Any]
         self.gid = goalDict["gid"] as! Int
