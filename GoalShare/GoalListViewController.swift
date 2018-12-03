@@ -16,7 +16,9 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     var databaseHandle:DatabaseHandle?
     var completedHandle:DatabaseHandle?
     
+    var goalData = [GoalModel]()
     var postData = [String]()
+    var sendgid: Int?
     var postLogId = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -24,27 +26,21 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        //Set current user ID
-        let currentUserId = Auth.auth().currentUser?.uid
-        
         // Fill cell from postData
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         cell?.textLabel?.text = postData[indexPath.row]
         
         //Fill with checkmark if the goal is completed
-        completedHandle = ref?.child("goals").child(postData[indexPath.row]).child("uids").child(currentUserId!).child("completed").observe(.value, with: { (DataSnapshot) in
-            let completedString = DataSnapshot.value as? String
-            
-            if (completedString == "true"){
-                cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+        for goals in goalData{
+            if(goals.goalName == postData[indexPath.row]){
+                if(goals.complete == "true"){
+                    cell?.accessoryType = UITableViewCell.AccessoryType.checkmark
+                }
+                else{
+                    cell?.accessoryType = UITableViewCell.AccessoryType.none
+                }
             }
-            else{
-                cell?.accessoryType = UITableViewCell.AccessoryType.none
-            }
-            
-        })
-        
+        }
         return cell!
     }
     
@@ -61,13 +57,16 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         //Set current user ID
         let currentUserId = Auth.auth().currentUser?.uid
         
+        //****
+        // This section is for resetting goals to false if they haven't been completed today
+        // I started on it but realized it's low priority so it is unfinished
+        //****
 //        //get current date
 //        let date = Date()
 //        let formatter = DateFormatter()
 //        formatter.dateFormat = "yyyyMMdd"
 //        let currentDate = formatter.string(from: date)
 //
-//        // mark goals as false if they haven't been completed today
 //        databaseHandle = ref?.child("goalHistory").child(currentUserId!).observe(.value, with: { (snapshot) in
 //            for gid in snapshot.children {
 //                let gidSnap = gid as! DataSnapshot
@@ -85,26 +84,21 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
 //            }
 //        })
         
-        //Retrieve posts and listen for changes
-        databaseHandle = ref?.child("goals").observe(.childAdded, with: { (snapshot) in
+        // fill goalData with user's goals and append gnames to postData
+        databaseHandle = self.ref?.child("Goals").child(currentUserId!).child("goals").observe(.value, with: { (goalSnapshot) in
+            self.postData.removeAll()
+            self.goalData.removeAll()
+            for goal in goalSnapshot.children {
+                print("*** Goal info - \(String(describing: goal))")
+                let fgoal = GoalModel(snap: goal as! DataSnapshot)
+                self.goalData.append(fgoal)
+            }
             
-            //Code that is executed when a new goal is added
-            // Add value from snapshot to postData if uid matches current user
-            let goalName = snapshot.key
-            for goal in snapshot.children {
-                let goalSnap = goal as! DataSnapshot
-                if (goalSnap.key == "uids"){
-                    for uid in goalSnap.children {
-                        let uidSnap = uid as! DataSnapshot
-                        if (uidSnap.key == currentUserId){
-                            self.postData.append(goalName)
-                        }
-                    }
-                }
+            for goal in self.goalData {
+                self.postData.append(goal.goalName)
             }
             self.tableView.reloadData()
         })
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +124,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             let cellName = currentCell.textLabel!.text
             
             // Set value to true
-            self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
+            //self.ref!.child("Goals").child(currentUserId!).child().setValue(["completed":"true"])
             
             // store in log
             // get current date
@@ -139,12 +133,13 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             formatter.dateFormat = "yyyyMMdd"
             let currentDate = formatter.string(from: date)
             
-            // get goalid and then log data
-            var goalId = 0
-            self.databaseHandle = self.ref?.child("goals").child(cellName!).child("gid").observe(.value, with: { (DataSnapshot) in
-                goalId = (DataSnapshot.value as? Int)!
-                self.ref?.child("goalHistory").child(currentUserId!).child(String(goalId)).child(currentDate).setValue(["true"])
-            })
+            // mark as completed, and then log data
+            for goals in self.goalData{
+                if(goals.goalName == cellName){
+                self.ref!.child("Goals").child(currentUserId!).child("goals").child(String(goals.gid)).setValue(["completed":"true","gid":goals.gid,"gname":goals.goalName,"goal_des":goals.goal_desc])
+                    self.ref?.child("goalHistory").child(currentUserId!).child(String(goals.gid)).child(currentDate).setValue(["true"])
+                }
+            }
         }
         complete.backgroundColor = .lightGray
         
@@ -154,6 +149,13 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
             let cellName = currentCell.textLabel!.text
             
+            // set sendgid
+            for goals in self.goalData{
+                if(goals.goalName == cellName){
+                    self.sendgid = goals.gid
+                }
+            }
+            
             // segue to description
             self.performSegue(withIdentifier: "goalDescription", sender: cellName)
             print("details button tapped")
@@ -161,6 +163,12 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         details.backgroundColor = .orange
         
         return [complete, details]
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let secondVC = segue.destination as? GoalDetailsViewController else {return}
+        secondVC.sentgid = sendgid
+    
     }
     /*
      // MARK: - Navigation

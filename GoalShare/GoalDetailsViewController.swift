@@ -13,13 +13,15 @@ class GoalDetailsViewController: UIViewController {
     @IBOutlet weak var timeFrameSeg: UISegmentedControl!
     @IBOutlet weak var BarChart: BasicBarChart!
     
+    var sentgid: Int?
+    
     // bar values
     var barValues: [Int] = [1,0,1,1,1,0,1]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("loaded")
+        print(sentgid)
         timeFrameSeg.tintColor = #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1)
         
         let dataEntries = self.generateDataEntries(barValues: barValues)
