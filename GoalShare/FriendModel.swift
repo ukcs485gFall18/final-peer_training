@@ -27,26 +27,26 @@ class FriendModel : NSObject {
     init(snap : DataSnapshot){
         self.uid = snap.key
         self.nickName = snap.value as! String
-        self.completePercent = Double()
+        completePercent = Double()
         _goals = [GoalModel]()
         totalGoals = Int()
         completeGoals = Int()
     }
     
     // functions
-    func calculateCompletionRate (_ goalArray: [GoalModel] ) {
-        let totalGoals = goalArray.count
+    func calculateCompletionRate ()  -> Double {
+        let totalGoals = goals.count
         var completeGoals = 0
         var cRate : Double = 0.0
-        print("*** Friend Model Goal Count - \(goalArray.count)")
-        if(goalArray.count > 0){
-            for goal in goalArray{
+        //print("*** Friend Model Goal Count - \(goalArray.count)")
+        if(goals.count > 0){
+            for goal in goals{
                 if goal.complete == "true" {
                     completeGoals += 1
                 }
             }
             cRate = round(Double(completeGoals / totalGoals)) * 100
         }
-        completePercent = cRate
+        return cRate
     }
 }
