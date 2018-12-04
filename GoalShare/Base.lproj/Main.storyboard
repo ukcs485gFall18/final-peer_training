@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -163,31 +163,68 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xlx-bA-iNr">
+                                <rect key="frame" x="128" y="223" width="51" height="31"/>
+                                <connections>
+                                    <action selector="onAllAccessory:" destination="C7u-zc-VGr" eventType="valueChanged" id="jKd-E1-JgY"/>
+                                </connections>
+                            </switch>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zjT-5D-x7e">
+                                <rect key="frame" x="16" y="268" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Friends to invite" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vsq-te-chV">
+                                <rect key="frame" x="16" y="306" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Goal:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxm-0g-mDD">
+                                <rect key="frame" x="16" y="225" width="92" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="3V7-nX-wiA" secondAttribute="trailing" constant="16" id="39C-PN-h3r"/>
+                            <constraint firstItem="gxm-0g-mDD" firstAttribute="top" secondItem="3V7-nX-wiA" secondAttribute="bottom" constant="22" id="7fv-4O-KIZ"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="Cwp-AQ-vs1" secondAttribute="trailing" constant="16" id="9oD-zL-smc"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="oCx-ga-FTg" secondAttribute="trailing" constant="16" id="BBy-2m-sFP"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="dhm-jB-KVN" secondAttribute="trailing" constant="16" id="CxX-A6-U83"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="Hcs-hF-VOE"/>
+                            <constraint firstItem="Vsq-te-chV" firstAttribute="top" secondItem="zjT-5D-x7e" secondAttribute="bottom" constant="8" id="I90-0K-Lns"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="153" id="Kap-Xz-QSh"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="O9B-20-Cxw"/>
+                            <constraint firstItem="Xlx-bA-iNr" firstAttribute="top" secondItem="3V7-nX-wiA" secondAttribute="bottom" constant="20" id="UI4-YX-tJA"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="zjT-5D-x7e" secondAttribute="trailing" constant="16" id="WRl-Pe-TSM"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="XQh-xq-le8"/>
+                            <constraint firstItem="Xlx-bA-iNr" firstAttribute="leading" secondItem="gxm-0g-mDD" secondAttribute="trailing" constant="20" id="YHe-yJ-wZ4"/>
+                            <constraint firstItem="zjT-5D-x7e" firstAttribute="top" secondItem="Xlx-bA-iNr" secondAttribute="bottom" constant="14" id="Ymd-3B-7lE"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="a0F-Le-0Bm"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="476" id="abO-5G-Gv9"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="afq-gr-PCg"/>
+                            <constraint firstItem="zjT-5D-x7e" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="dbg-t6-l3Y"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="115" id="kxE-H7-MgX"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="lhM-W8-pIj"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="Vsq-te-chV" secondAttribute="trailing" constant="16" id="pBf-ck-DhH"/>
+                            <constraint firstItem="gxm-0g-mDD" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="rpw-2A-kXs"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="61" id="swM-pa-6qH"/>
+                            <constraint firstItem="Vsq-te-chV" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="wSw-IY-Hkl"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="wlL-JI-zY9"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="xLk-B4-OLn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="G3d-c9-amJ"/>
                     </view>
                     <connections>
-                        <outlet property="goalDescriptionTxt" destination="3V7-nX-wiA" id="L6K-7N-GIv"/>
-                        <outlet property="goalNameTxt" destination="Cwp-AQ-vs1" id="NDp-yB-PCd"/>
+                        <outlet property="goalDes" destination="3V7-nX-wiA" id="1RH-aC-l9x"/>
+                        <outlet property="goalName" destination="Cwp-AQ-vs1" id="lsh-KB-phf"/>
+                        <outlet property="groupName" destination="zjT-5D-x7e" id="8Me-vt-FQx"/>
+                        <outlet property="inviteFriends" destination="Vsq-te-chV" id="Ro8-9J-CBm"/>
+                        <outlet property="myswitch" destination="Xlx-bA-iNr" id="0MF-vE-sYl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfA-B5-IZe" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -619,15 +656,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="goals@1" width="37.5" height="37.5"/>
-        <image name="home@1" width="37.5" height="37.5"/>
-        <image name="usergroups@1" width="37.5" height="37.5"/>
+        <image name="goals@1" width="25" height="25"/>
+        <image name="home@1" width="25" height="25"/>
+        <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KnS-fZ-S02"/>
         <segue reference="xLF-yF-LNk"/>
         <segue reference="nvB-5R-Awj"/>
         <segue reference="c9J-EE-5tj"/>
-        <segue reference="4Aq-Xl-yJQ"/>
+        <segue reference="VRB-UB-pGd"/>
     </inferredMetricsTieBreakers>
 </document>

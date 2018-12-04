@@ -12,11 +12,13 @@ import FirebaseDatabase
 
 class GoalsViewController: UIViewController {
 
+
     @IBOutlet weak var goalName: UITextField!
     @IBOutlet weak var goalDes: UITextField!
-    @IBOutlet weak var myswitch: UISwitch!
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var inviteFriends: UITextField!
+    @IBOutlet weak var myswitch: UISwitch!
+
     
     var dbref : DatabaseReference!
     var handle: DatabaseHandle!
