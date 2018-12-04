@@ -18,7 +18,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     
     var goalData = [GoalModel]()
     var postData = [String]()
-    var sendgid: Int?
+    var sendGoal: GoalModel?
     var postLogId = ""
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -152,7 +152,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             // set sendgid
             for goals in self.goalData{
                 if(goals.goalName == cellName){
-                    self.sendgid = goals.gid
+                    self.sendGoal = goals
                 }
             }
             
@@ -167,8 +167,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let secondVC = segue.destination as? GoalDetailsViewController else {return}
-        secondVC.sentgid = sendgid
-    
+        secondVC.sentGoal = sendGoal
     }
     /*
      // MARK: - Navigation

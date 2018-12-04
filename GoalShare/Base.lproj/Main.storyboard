@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -444,7 +444,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="H9I-tU-Tbs">
-                                <rect key="frame" x="61" y="39" width="253" height="29"/>
+                                <rect key="frame" x="61" y="620" width="253" height="29"/>
                                 <segments>
                                     <segment title="Week"/>
                                     <segment title="Month"/>
@@ -453,24 +453,46 @@
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </segmentedControl>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lWA-p5-Bf9" customClass="BasicBarChart" customModule="GoalShare" customModuleProvider="target">
-                                <rect key="frame" x="16" y="151" width="343" height="246"/>
+                                <rect key="frame" x="16" y="176" width="343" height="412"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="51B-RW-QEb">
+                                <rect key="frame" x="82" y="35" width="42" height="86"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="86" id="TZh-FK-Pwu"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s08-tA-Okm">
+                                <rect key="frame" x="39" y="100" width="128" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="centerX" secondItem="H9I-tU-Tbs" secondAttribute="centerX" id="3Bu-GW-jy5"/>
-                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="leading" secondItem="j8f-EM-qqI" secondAttribute="leading" constant="61" id="BPB-eZ-OCU"/>
-                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="leading" secondItem="vxB-TU-Rtu" secondAttribute="leadingMargin" id="BfO-dl-P2n"/>
-                            <constraint firstItem="j8f-EM-qqI" firstAttribute="bottom" secondItem="lWA-p5-Bf9" secondAttribute="bottom" constant="270" id="FjC-d8-Ab4"/>
-                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="top" secondItem="H9I-tU-Tbs" secondAttribute="bottom" constant="84" id="HsH-SF-NIy"/>
-                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="centerX" secondItem="vxB-TU-Rtu" secondAttribute="centerX" id="eBz-DJ-rP6"/>
-                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="top" secondItem="j8f-EM-qqI" secondAttribute="top" constant="19" id="vBs-Yu-VZT"/>
+                            <constraint firstItem="s08-tA-Okm" firstAttribute="centerX" secondItem="51B-RW-QEb" secondAttribute="centerX" id="1Mk-C3-woe"/>
+                            <constraint firstItem="51B-RW-QEb" firstAttribute="top" secondItem="j8f-EM-qqI" secondAttribute="top" constant="15" id="36R-4c-afa"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="top" secondItem="j8f-EM-qqI" secondAttribute="top" constant="600" id="FGh-JQ-yLe"/>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="top" secondItem="51B-RW-QEb" secondAttribute="bottom" constant="55" id="JCw-2c-TC3"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="top" secondItem="lWA-p5-Bf9" secondAttribute="bottom" constant="32" id="MYZ-9n-VgU"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="centerX" secondItem="vxB-TU-Rtu" secondAttribute="centerX" id="e7t-l3-OPx"/>
+                            <constraint firstItem="s08-tA-Okm" firstAttribute="top" secondItem="j8f-EM-qqI" secondAttribute="top" constant="80" id="g6s-Na-1eJ"/>
+                            <constraint firstItem="s08-tA-Okm" firstAttribute="leading" secondItem="j8f-EM-qqI" secondAttribute="leading" constant="39" id="qJD-vu-kRP"/>
+                            <constraint firstItem="H9I-tU-Tbs" firstAttribute="leading" secondItem="j8f-EM-qqI" secondAttribute="leading" constant="61" id="qZy-JI-EHI"/>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="leading" secondItem="vxB-TU-Rtu" secondAttribute="leadingMargin" id="rSf-H6-D5Q"/>
+                            <constraint firstItem="lWA-p5-Bf9" firstAttribute="centerX" secondItem="H9I-tU-Tbs" secondAttribute="centerX" id="vy9-9x-tVJ"/>
+                            <constraint firstItem="51B-RW-QEb" firstAttribute="leading" secondItem="j8f-EM-qqI" secondAttribute="leading" constant="82" id="w5w-YJ-NhI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="j8f-EM-qqI"/>
                     </view>
                     <connections>
                         <outlet property="BarChart" destination="lWA-p5-Bf9" id="KcY-b8-Tl8"/>
+                        <outlet property="GoalDes" destination="s08-tA-Okm" id="YZQ-5f-Uik"/>
+                        <outlet property="GoalName" destination="51B-RW-QEb" id="0fS-RS-A26"/>
                         <outlet property="timeFrameSeg" destination="H9I-tU-Tbs" id="lsh-Mz-9kI"/>
                     </connections>
                 </viewController>
@@ -619,9 +641,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="goals@1" width="37.5" height="37.5"/>
-        <image name="home@1" width="37.5" height="37.5"/>
-        <image name="usergroups@1" width="37.5" height="37.5"/>
+        <image name="goals@1" width="25" height="25"/>
+        <image name="home@1" width="25" height="25"/>
+        <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="KnS-fZ-S02"/>
