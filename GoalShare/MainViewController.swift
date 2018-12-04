@@ -26,15 +26,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                     "My Goals"]
     var items = [[FriendModel]() as [Any],
                  [GoalModel]()]
-
+    var tintColors = [ #colorLiteral(red: 0.3182998379, green: 0.3019897466, blue: 0.4855987017, alpha: 0.9021476506), #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.9021476506), #colorLiteral(red: 0.3869009155, green: 0.696799651, blue: 0.3262433093, alpha: 0.9021476506), #colorLiteral(red: 0.696799651, green: 0.04511301659, blue: 0.0009451018385, alpha: 0.9021476506), #colorLiteral(red: 0.7189426104, green: 0.71675867, blue: 0.27614689, alpha: 0.9021476506) ]
     
     // View Display and Data Functions
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.summaryTableView.reloadData()
-    }
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -47,28 +42,27 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("/(curentUser) not defined.")
             fatalError("Current User is not defined.")
         }
-
+        var goals = [GoalModel]()
         if(friendData.count == 0){
             friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
                 for friend in snapshot.children{
                     let friendSnap = friend as! DataSnapshot
                     let friend = FriendModel(snap: friendSnap)
                     self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
-                        var goals = [GoalModel]()
                         for goal in goalSnapshot.children {
                             let fgoal = GoalModel(snap: goal as! DataSnapshot)
                             goals.append(fgoal)
                         }
                         friend.goals = goals
-                        friend.calculateCompletionRate(goals)
-                        //print("*** Count of friend goals = \(friend.goals.count)")
+                        print("*** Count of friend goals = \(friend.goals.count)")
                     })
                     if(!self.friendData.contains(friend)){
+                        friend.completePercent = friend.calculateCompletionRate()
                         self.friendData.append(friend)
                     }
-                    self.items[0] = self.friendData
-                    self.summaryTableView.reloadData()
                 }
+                self.items[0] = self.friendData
+                self.summaryTableView.reloadData()
             })
         }
         
@@ -82,12 +76,12 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.summaryTableView.reloadData()
             })
         }
+        self.summaryTableView.reloadData()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         self.summaryTableView.reloadData()
     }
-    
     
     // Table - Delegate Functions
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -111,8 +105,15 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             if friendData.count > 0 {
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
                 cell?.textLabel?.text = friend.nickName
+                friend.completePercent = friend.calculateCompletionRate()
                 print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
                 cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
+                let timage = UIImage(named: "message")?.withRenderingMode(.alwaysTemplate)
+                let msgBtn = UIButton()
+                msgBtn.setImage(timage, for: .normal)
+                msgBtn.tintColor = tintColors[tindex]
+                cell?.addSubview(msgBtn)
             }else{
                 cell?.textLabel?.text = "No Friends Found"
                 cell?.detailTextLabel?.text = "Go to the Friends menu to add a friend."
@@ -122,15 +123,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let goal = items[indexPath.section][indexPath.row] as! GoalModel
                 cell?.textLabel?.text = goal.goal_desc
                 let completionStatus = (goal.complete == "true" ? "completed" : "not completed")
-                print("*** \(goal.goalName) is \(goal.complete) for today.")
                 cell?.detailTextLabel?.text = "\(goal.goalName) is \(completionStatus) for today."
             }else{
                 cell?.textLabel?.text = "No Goals Found"
                 cell?.detailTextLabel?.text = "Go to the Goals menu to create your first Goal."
             }
         }else{
-            cell?.textLabel?.text = "Testing"
-            cell?.detailTextLabel?.text = "No Completion Found"
+            cell?.textLabel?.text = "Error"
+            cell?.detailTextLabel?.text = "No data found"
         }
         return cell!
     }

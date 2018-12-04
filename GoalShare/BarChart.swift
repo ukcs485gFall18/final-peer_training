@@ -10,10 +10,16 @@ import UIKit
 class BasicBarChart: UIView {
     
     /// the width of each bar
-    let barWidth: CGFloat = 40.0
+    var barWidth: CGFloat = 40
     
     /// space between each bar
-    let space: CGFloat = 10.0
+    var space: CGFloat = 10
+    
+    // textLabel width
+    var textWidth: CGFloat = 50
+    
+    // check if it's the month graph
+    var isMonth: Int = 0
     
     /// space at the bottom of the bar to show the title
     private let bottomSpace: CGFloat = 40.0
@@ -78,10 +84,12 @@ class BasicBarChart: UIView {
         drawBar(xPos: xPos, yPos: yPos, color: entry.color)
         
         /// Draw text above the bar
-        drawTextValue(xPos: xPos - space/2, yPos: yPos - 30, textValue: entry.textValue, color: entry.color)
+        drawTextValue(xPos: xPos-space/2, yPos: yPos - 30, textValue: entry.textValue, color: entry.color)
         
         /// Draw text below the bar
         drawTitle(xPos: xPos - space/2, yPos: mainLayer.frame.height - bottomSpace + 10, title: entry.title, color: entry.color)
+        print("bar xpos: \(xPos)")
+        print("bar xpos: \(xPos-space/2)")
     }
     
     private func drawBar(xPos: CGFloat, yPos: CGFloat, color: UIColor) {
@@ -110,7 +118,8 @@ class BasicBarChart: UIView {
             if lineInfo["dashed"] as! Bool {
                 lineLayer.lineDashPattern = [4, 4]
             }
-            lineLayer.strokeColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
+            //lineLayer.strokeColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1).cgColor
+            lineLayer.strokeColor = UIColor.clear.cgColor
             self.layer.insertSublayer(lineLayer, at: 0)
         }
     }
@@ -130,10 +139,14 @@ class BasicBarChart: UIView {
     
     private func drawTitle(xPos: CGFloat, yPos: CGFloat, title: String, color: UIColor) {
         let textLayer = CATextLayer()
-        textLayer.frame = CGRect(x: xPos, y: yPos, width: barWidth + space, height: 22)
+        textLayer.frame = CGRect(x: xPos, y: yPos, width: textWidth, height: 22)
         textLayer.foregroundColor = color.cgColor
         textLayer.backgroundColor = UIColor.clear.cgColor
-        textLayer.alignmentMode = CATextLayerAlignmentMode.center
+        if(isMonth==0){
+            textLayer.alignmentMode = CATextLayerAlignmentMode.center
+        }else{
+            textLayer.alignmentMode = CATextLayerAlignmentMode.left
+        }
         textLayer.contentsScale = UIScreen.main.scale
         textLayer.font = CTFontCreateWithName(UIFont.systemFont(ofSize: 0).fontName as CFString, 0, nil)
         textLayer.fontSize = 14
