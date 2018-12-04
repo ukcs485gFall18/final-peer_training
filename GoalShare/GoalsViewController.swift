@@ -12,12 +12,12 @@ import FirebaseDatabase
 
 class GoalsViewController: UIViewController {
 
-
     @IBOutlet weak var goalName: UITextField!
     @IBOutlet weak var goalDes: UITextField!
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var inviteFriends: UITextField!
     @IBOutlet weak var myswitch: UISwitch!
+    
 
     
     var dbref : DatabaseReference!
@@ -65,6 +65,8 @@ class GoalsViewController: UIViewController {
                 self.dbref!.child("Groups").child(String(self.groupId)).setValue(["GroupName":self.groupName.text!,"uids":self.uidsToAdd])
                 //update the max gid and groupId
                 self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId+1])
+                //add the current users uid to the list
+                self.uidsToAdd.append(self.uid)
                 //add the goal to every member of the group
                 for index in self.uidsToAdd {
                     self.dbref.child("Goals").child(String(index)).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])

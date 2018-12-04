@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.15" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zUP-9z-cPR">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.9"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -167,31 +167,68 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Goal:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBL-6Y-Qxv">
+                                <rect key="frame" x="16" y="218" width="92" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ihm-Gn-De3">
+                                <rect key="frame" x="124" y="218" width="51" height="31"/>
+                                <connections>
+                                    <action selector="onAllAccessory:" destination="C7u-zc-VGr" eventType="valueChanged" id="509-Gm-UyO"/>
+                                </connections>
+                            </switch>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ari-ev-k2s">
+                                <rect key="frame" x="16" y="264" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invite Friends" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wp8-wn-l2H">
+                                <rect key="frame" x="16" y="309" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="3V7-nX-wiA" secondAttribute="trailing" constant="16" id="39C-PN-h3r"/>
+                            <constraint firstItem="ari-ev-k2s" firstAttribute="top" secondItem="Ihm-Gn-De3" secondAttribute="bottom" constant="15" id="6jS-fm-egi"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="Cwp-AQ-vs1" secondAttribute="trailing" constant="16" id="9oD-zL-smc"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="oCx-ga-FTg" secondAttribute="trailing" constant="16" id="BBy-2m-sFP"/>
+                            <constraint firstItem="Ihm-Gn-De3" firstAttribute="leading" secondItem="tBL-6Y-Qxv" secondAttribute="trailing" constant="16" id="BZq-SA-0On"/>
                             <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="dhm-jB-KVN" secondAttribute="trailing" constant="16" id="CxX-A6-U83"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="Hcs-hF-VOE"/>
+                            <constraint firstItem="Wp8-wn-l2H" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="IVb-qy-jTX"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="153" id="Kap-Xz-QSh"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="O9B-20-Cxw"/>
                             <constraint firstItem="3V7-nX-wiA" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="XQh-xq-le8"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="a0F-Le-0Bm"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="476" id="abO-5G-Gv9"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="afq-gr-PCg"/>
+                            <constraint firstItem="tBL-6Y-Qxv" firstAttribute="top" secondItem="3V7-nX-wiA" secondAttribute="bottom" constant="15" id="b2p-wT-TJw"/>
+                            <constraint firstItem="tBL-6Y-Qxv" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="bkI-1K-XzR"/>
+                            <constraint firstItem="Ihm-Gn-De3" firstAttribute="top" secondItem="3V7-nX-wiA" secondAttribute="bottom" constant="15" id="cei-h7-vKR"/>
+                            <constraint firstItem="Wp8-wn-l2H" firstAttribute="top" secondItem="ari-ev-k2s" secondAttribute="bottom" constant="15" id="fF1-fw-aWf"/>
                             <constraint firstItem="Cwp-AQ-vs1" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="115" id="kxE-H7-MgX"/>
                             <constraint firstItem="oCx-ga-FTg" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="lhM-W8-pIj"/>
+                            <constraint firstItem="ari-ev-k2s" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="mGY-Fh-bbM"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="top" secondItem="G3d-c9-amJ" secondAttribute="top" constant="61" id="swM-pa-6qH"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="ari-ev-k2s" secondAttribute="trailing" constant="16" id="syU-FT-bUb"/>
+                            <constraint firstItem="G3d-c9-amJ" firstAttribute="trailing" secondItem="Wp8-wn-l2H" secondAttribute="trailing" constant="16" id="w5G-as-Dxs"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="leading" secondItem="G3d-c9-amJ" secondAttribute="leading" constant="16" id="wlL-JI-zY9"/>
                             <constraint firstItem="dhm-jB-KVN" firstAttribute="centerX" secondItem="G3d-c9-amJ" secondAttribute="centerX" id="xLk-B4-OLn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="G3d-c9-amJ"/>
                     </view>
                     <connections>
-                        <outlet property="goalDescriptionTxt" destination="3V7-nX-wiA" id="L6K-7N-GIv"/>
-                        <outlet property="goalNameTxt" destination="Cwp-AQ-vs1" id="NDp-yB-PCd"/>
+                        <outlet property="goalDes" destination="3V7-nX-wiA" id="LLR-tk-6E7"/>
+                        <outlet property="goalName" destination="Cwp-AQ-vs1" id="4O9-N7-Vo6"/>
+                        <outlet property="groupName" destination="ari-ev-k2s" id="DN2-pF-sZP"/>
+                        <outlet property="inviteFriends" destination="Wp8-wn-l2H" id="bhz-0Y-8Cw"/>
+                        <outlet property="myswitch" destination="Ihm-Gn-De3" id="dnH-ek-cu7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lfA-B5-IZe" userLabel="First Responder" sceneMemberID="firstResponder"/>
