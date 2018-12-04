@@ -11,40 +11,83 @@ import Firebase
 import FirebaseDatabase
 
 class GoalsViewController: UIViewController {
-    @IBOutlet weak var goalNameTxt: UITextField!
-    @IBOutlet weak var goalDescriptionTxt: UITextField!
+
+    @IBOutlet weak var goalName: UITextField!
+    @IBOutlet weak var goalDes: UITextField!
+    @IBOutlet weak var myswitch: UISwitch!
+    @IBOutlet weak var groupName: UITextField!
+    @IBOutlet weak var inviteFriends: UITextField!
     
     var dbref : DatabaseReference!
+    var handle: DatabaseHandle!
     var gid: Int!
+    var groupId: Int!
+    var uid: String!
     var anyValue: AnyObject?
+    var groupGoalFlag = 0
+    var uidsToAdd = [String]()
     
-    @IBAction func DoneButtonPressed(_ sender: Any) {
-        if let goalDes = goalDescriptionTxt.text {
-            if let goalName = goalNameTxt.text {
-                if (goalDes != "" && goalName != "") {
-                    dbref.child("goals").queryOrdered(byChild: "gid").queryLimited(toLast: 1).observeSingleEvent(of: .value, with: {
-                        snapshot in
-                        guard let fetchedData = snapshot.children.allObjects as? [DataSnapshot] else {return}
-                        for item in fetchedData {
-                            let value = item.value as! [String: AnyObject]
-                            self.anyValue = value["gid"]
-                        }
-                        let maxGid = self.anyValue as? Int
-                        if let retrievedGid = maxGid as? Int {
-                            self.gid = retrievedGid + 1
-                        } else {
-                            self.gid = 0
-                        }
-                        let uid = Auth.auth().currentUser?.uid
-                        self.dbref.child("goals").child(goalName).setValue(["gid":self.gid, "goal_des":goalDes])
-                        self.dbref.child("goals").child(goalName).child("uids").child(uid!).setValue(["completed":"false"])
-                    })
-                }
-            }
+    @IBAction func onAllAccessory(_ sender: UISwitch) {
+        if myswitch.isOn == true {
+            groupName.isHidden = false
+            inviteFriends.isHidden = false
+        } else {
+            groupName.isHidden = true
+            inviteFriends.isHidden = true
         }
     }
+    
+    @IBAction func DoneButtonPressed(_ sender: Any) {
+        uid = Auth.auth().currentUser?.uid
+        //This is going to be a group goal
+        if (self.myswitch.isOn == true && self.groupName.text != "" && self.goalName.text != "" && self.goalDes.text != "") {
+            let NamesArr = self.inviteFriends.text!.split(separator:",")
+            //search if users in list exist and if so add them to the namesToAdd array
+            dbref.child("users").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
+                for child in snapshot.children {
+                    let currentUser = child as! DataSnapshot
+                    let currentUserName = currentUser.childSnapshot(forPath: "uname")
+                    if (NamesArr.contains(currentUserName.value as! Substring)) {
+                        let currentUserId = currentUser.childSnapshot(forPath: "uid")
+                        self.uidsToAdd.append(currentUserId.value as! String)
+                    }
+                }
+            })
+            //retrieve the max gid and groupId
+            dbref!.child("MaxIDs").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
+                let children = snapshot.value as! [String: Any]
+                self.gid = children["gid"] as? Int
+                self.groupId = children["groupId"] as? Int
+                
+                //create the new group
+                self.dbref!.child("Groups").child(String(self.groupId)).setValue(["GroupName":self.groupName.text!,"uids":self.uidsToAdd])
+                //update the max gid and groupId
+                self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId+1])
+                //add the goal to every member of the group
+                for index in self.uidsToAdd {
+                    self.dbref.child("Goals").child(String(index)).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])
+                }
+            })
+        }
+        //This is an individual goal
+        else if (self.goalName.text != "" && self.goalDes.text != "") {
+            //retrieve the max gid
+            dbref!.child("MaxIDs").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
+                let children = snapshot.value as! [String: Any]
+                self.gid = children["gid"] as? Int
+                
+                //update the max gid, but leave groupId at current value
+                self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId])
+                self.dbref.child("Goals").child(self.uid).child("goals").child(String(self.gid)).setValue(["completed":"false", "gid":self.gid, "gname":self.goalName.text!, "goal_des":self.goalDes.text!])
+            })
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        myswitch.isOn = false
+        groupName.isHidden = true
+        inviteFriends.isHidden = true
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         dbref =  Database.database().reference()
         // Do any additional setup after loading the view.
