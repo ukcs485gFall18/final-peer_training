@@ -11,8 +11,7 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+class MainViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {    
     @IBOutlet weak var summaryTableView: UITableView!
     var dbref : DatabaseReference!
     let currentUser = Auth.auth().currentUser?.uid
