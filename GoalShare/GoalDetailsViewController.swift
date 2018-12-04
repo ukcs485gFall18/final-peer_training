@@ -73,7 +73,6 @@ class GoalDetailsViewController: UIViewController {
     
     // Function that generates month graph
     func generateMonthGraph(barValues: [Int]) -> [BarEntry] {
-        let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1),#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)]
         var useColor = #colorLiteral(red: 0.8392, green: 0.8392, blue: 0.8392, alpha: 1)
         let completeColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
         let incompleteColor = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
@@ -83,20 +82,16 @@ class GoalDetailsViewController: UIViewController {
         BarChart.textWidth = 60
         BarChart.isMonth = 1
         
-        // date formatting
-        let formatter = DateFormatter()
-        //formatter.dateFormat = "MM"
+        // get
         let calendar = Calendar.current
-        var date = Date()
+        let date = Date()
         let range = calendar.range(of: .day, in: .month, for: date)!
         let numDays = range.count
-        //let month = formatter.string(from: date)
         var dateLabel = ""
         
-        // Creates 12 bars with values from goal completion for each month over the past year
+        // Creates bars for every day of the month with values from goal completion for each month over the past month
         for i in 0...numDays-1{
             if ((i+1) % 5 == 1){
-                //dateLabel = "\(formatter.string(from:date))/\(i+1)"
                 dateLabel = String(i+1)
             }else{
                 dateLabel = ""
@@ -118,7 +113,7 @@ class GoalDetailsViewController: UIViewController {
     
     // Function that generates year graph
     func generateYearGraph(barValues: [Int]) -> [BarEntry] {
-        let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1),#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)]
+        let colors = [#colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.5576759543, green: 0.3133929401, blue: 0.4060785278, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)]
         //let defaultColor = #colorLiteral(red: 0.9098, green: 0.651, blue: 0, alpha: 1)
         var result: [BarEntry] = []
         BarChart.barWidth = 20
@@ -134,8 +129,8 @@ class GoalDetailsViewController: UIViewController {
         // Creates 12 bars with values from goal completion for each month over the past year
         for i in 0...11{
             date = Calendar.current.date(byAdding: .month, value: 1, to: date!)!
-            var month = formatter.string(from: date!)
-            var barHeight = Float(barValues[i])/31
+            let month = formatter.string(from: date!)
+            let barHeight = Float(barValues[i])/31
             result.append(BarEntry(color: colors[i], height: barHeight, textValue: "\(barValues[i])", title: month))
         }
         return result
@@ -143,32 +138,29 @@ class GoalDetailsViewController: UIViewController {
     
     @objc func segmentedControlValueChanged(segment: UISegmentedControl) {
         if segment.selectedSegmentIndex == 0 {
-            print("week button pressed")
             self.barValues = [Int](repeating: 0, count: 7)
-            
             databaseHandle = self.ref!.child("goalHistory").child(currentUserId!).child(String(sentGoal!.gid)).observe(.value, with: {(dateSnapshot) in
+                // Set the date of 7 days ago in proper format
+                let todayDate = Date()
+                let date_7 = todayDate.addingTimeInterval(TimeInterval(-7*24*60*60))
+                let formatter = DateFormatter()
+                formatter.dateFormat = "yyyyMMdd"
+                let currentDate_7 = formatter.string(from: date_7)
+                // Loop through date logs
                 for date in dateSnapshot.children{
                     let dateSnap = date as! DataSnapshot
-                    
-                    let todayDate = Date()
-                    let date_7 = todayDate.addingTimeInterval(TimeInterval(-7*24*60*60))
+                    // usedDate starts as today, columns are updated backwards
                     var dateToChange = Date()
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyyMMdd"
-                    
                     var usedDate = formatter.string(from: todayDate)
-                    let currentDate_7 = formatter.string(from: date_7)
-                    var colToUpdate = 6
-                    
+                    var colToUpdate = self.barValues.count - 1
+                    // if the log date matches any of the days in the past week, update that column
                     while(usedDate != currentDate_7){
                         if (dateSnap.key == usedDate){
                             self.barValues[colToUpdate] = 1
                         }
                         dateToChange.addTimeInterval(-24*60*60)
                         usedDate = formatter.string(from: dateToChange)
-                        if(colToUpdate != 0){
-                            colToUpdate = colToUpdate - 1
-                        }
+                        colToUpdate = colToUpdate - 1
                     }
                 }
                 let dataEntries = self.generateWeekGraph(barValues: self.barValues)
