@@ -33,56 +33,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        summaryTableView.delegate = self
-        summaryTableView.dataSource = self
-
-        // build reference to Firebase
-        dbref = Database.database().reference()
-        guard let currentUser = currentUser else{
-            print("/(curentUser) not defined.")
-            fatalError("Current User is not defined.")
-        }
-        var goals = [GoalModel]()
-        if(friendData.count == 0){
-            friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
-                for friend in snapshot.children{
-                    let friendSnap = friend as! DataSnapshot
-                    let friend = FriendModel(snap: friendSnap)
-                    self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
-                        for goal in goalSnapshot.children {
-                            let fgoal = GoalModel(snap: goal as! DataSnapshot)
-                            goals.append(fgoal)
-                        }
-                        friend.goals = goals
-                        print("*** Count of friend goals = \(friend.goals.count)")
-                    })
-                    if(!self.friendData.contains(friend)){
-                        friend.completePercent = friend.calculateCompletionRate()
-                        self.friendData.append(friend)
-                    }
-                }
-                self.items[0] = self.friendData
-                self.summaryTableView.reloadData()
-            })
-        }
-        
-        if(goalData.count == 0){
-            goalHandle = dbref?.child("Goals/\(currentUser)").observe(.childAdded, with: { (goalSnapshot) in
-                for goal in goalSnapshot.children{
-                    let ugoal = GoalModel(snap: goal as! DataSnapshot)
-                    self.goalData.append(ugoal)
-                }
-                self.items[1] = self.goalData
-                self.summaryTableView.reloadData()
-            })
-        }
-        self.summaryTableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
         for friend in friendData {
             friend.completePercent = friend.calculateCompletionRate()
         }
+        summaryTableView.reloadData()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         summaryTableView.reloadData()
     }
 
@@ -90,7 +48,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(_ : true)
         summaryTableView.delegate = self
         summaryTableView.dataSource = self
-/*
+
         // build reference to Firebase
         dbref = Database.database().reference()
         guard let currentUser = currentUser else{
@@ -130,7 +88,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.items[1] = self.goalData
                 self.summaryTableView.reloadData()
             })
-        }*/
+        }
         self.summaryTableView.reloadData()
     }
     
@@ -159,11 +117,14 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 friend.completePercent = friend.calculateCompletionRate()
                 print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
                 fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
-                fcell.friendIcon.image = UIImage(named: "star")
+                fcell.friendIcon.image = UIImage(named: "iStar@1")
                 let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
-                let timage = UIImage(named: "message")?.withRenderingMode(.alwaysTemplate)
+                let timage = UIImage(named: "message@1")?.withRenderingMode(.alwaysTemplate)
                 fcell.msgButton.setImage(timage, for: .normal)
                 fcell.msgButton.tintColor = tintColors[tindex]
+                fcell.msgButton.addTarget(self, action: Selector(("msgFriend:")), for: .touchUpInside)
+                //fcell.msgButton.setTitle(friend.uid, for: .normal)
+                fcell.msgButton.tag = indexPath.row
                 return fcell
             }else{
                 let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
@@ -192,7 +153,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 55
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -201,5 +162,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = #colorLiteral(red: 0.5571277142, green: 0.3138887882, blue: 0.4069343805, alpha: 0.5)
+    }
+    
+    // data functions
+    func getFriend(_ index : Int) -> FriendModel {
+        print("\(friendData[index])")
+        return friendData[index]
     }
 }

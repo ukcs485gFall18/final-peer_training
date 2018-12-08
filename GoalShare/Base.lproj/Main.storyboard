@@ -126,7 +126,7 @@
                                                                 <constraint firstAttribute="width" constant="250" id="XUV-nh-K1u"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4p4-Gd-qR6">
+                                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4p4-Gd-qR6">
                                                             <rect key="frame" x="301.5" y="0.0" width="63.5" height="33.5"/>
                                                             <state key="normal" image="message@1"/>
                                                             <connections>
