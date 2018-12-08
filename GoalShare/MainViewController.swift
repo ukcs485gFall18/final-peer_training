@@ -32,10 +32,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
         summaryTableView.delegate = self
         summaryTableView.dataSource = self
-        
+
         // build reference to Firebase
         dbref = Database.database().reference()
         guard let currentUser = currentUser else{
@@ -78,8 +78,59 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         self.summaryTableView.reloadData()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
+        for friend in friendData {
+            friend.completePercent = friend.calculateCompletionRate()
+        }
+        summaryTableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(_ : true)
+        summaryTableView.delegate = self
+        summaryTableView.dataSource = self
+/*
+        // build reference to Firebase
+        dbref = Database.database().reference()
+        guard let currentUser = currentUser else{
+            print("/(curentUser) not defined.")
+            fatalError("Current User is not defined.")
+        }
+        var goals = [GoalModel]()
+        if(friendData.count == 0){
+            friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
+                for friend in snapshot.children{
+                    let friendSnap = friend as! DataSnapshot
+                    let friend = FriendModel(snap: friendSnap)
+                    self.goalHandle = self.dbref?.child("Goals/\(friend.uid)").observe(.childAdded, with: { (goalSnapshot) in
+                        for goal in goalSnapshot.children {
+                            let fgoal = GoalModel(snap: goal as! DataSnapshot)
+                            goals.append(fgoal)
+                        }
+                        friend.goals = goals
+                        print("*** Count of friend goals = \(friend.goals.count)")
+                    })
+                    if(!self.friendData.contains(friend)){
+                        friend.completePercent = friend.calculateCompletionRate()
+                        self.friendData.append(friend)
+                    }
+                }
+                self.items[0] = self.friendData
+                self.summaryTableView.reloadData()
+            })
+        }
+        
+        if(goalData.count == 0){
+            goalHandle = dbref?.child("Goals/\(currentUser)").observe(.childAdded, with: { (goalSnapshot) in
+                for goal in goalSnapshot.children{
+                    let ugoal = GoalModel(snap: goal as! DataSnapshot)
+                    self.goalData.append(ugoal)
+                }
+                self.items[1] = self.goalData
+                self.summaryTableView.reloadData()
+            })
+        }*/
         self.summaryTableView.reloadData()
     }
     
@@ -100,25 +151,28 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
         if(indexPath.section == 0){
+            let fcell = summaryTableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendTableViewCell
             if friendData.count > 0 {
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
-                cell?.textLabel?.text = friend.nickName
+                fcell.friendLabel?.text = friend.nickName
                 friend.completePercent = friend.calculateCompletionRate()
                 print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
-                cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                fcell.friendIcon.image = UIImage(named: "star")
                 let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
                 let timage = UIImage(named: "message")?.withRenderingMode(.alwaysTemplate)
-                let msgBtn = UIButton()
-                msgBtn.setImage(timage, for: .normal)
-                msgBtn.tintColor = tintColors[tindex]
-                cell?.addSubview(msgBtn)
+                fcell.msgButton.setImage(timage, for: .normal)
+                fcell.msgButton.tintColor = tintColors[tindex]
+                return fcell
             }else{
+                let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
                 cell?.textLabel?.text = "No Friends Found"
-                cell?.detailTextLabel?.text = "Go to the Friends menu to add a friend."
+                cell?.detailTextLabel?.text = "Go to the Friends menu to add a  friend."
+                return cell!
             }
         }else if(indexPath.section == 1){
+            let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
             if goalData.count > 0 {
                 let goal = items[indexPath.section][indexPath.row] as! GoalModel
                 cell?.textLabel?.text = goal.goal_desc
@@ -128,11 +182,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 cell?.textLabel?.text = "No Goals Found"
                 cell?.detailTextLabel?.text = "Go to the Goals menu to create your first Goal."
             }
+            return cell!
         }else{
+            let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.textLabel?.text = "Error"
             cell?.detailTextLabel?.text = "No data found"
+            return cell!
         }
-        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
