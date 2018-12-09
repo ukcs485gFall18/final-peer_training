@@ -38,7 +38,6 @@ class FriendModel : NSObject {
         let totalGoals = goals.count
         var completeGoals = 0
         var cRate : Double = 0.0
-        //print("*** Friend Model Goal Count - \(goalArray.count)")
         if(goals.count > 0){
             for goal in goals{
                 if goal.complete == "true" {

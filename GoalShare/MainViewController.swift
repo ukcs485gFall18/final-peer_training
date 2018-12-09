@@ -31,10 +31,23 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        for friend in friendData {
+            friend.completePercent = friend.calculateCompletionRate()
+        }
+        summaryTableView.reloadData()
+        
+    }
     
+    override func viewDidAppear(_ animated: Bool) {
+        summaryTableView.reloadData()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(_ : true)
         summaryTableView.delegate = self
         summaryTableView.dataSource = self
-        
+
         // build reference to Firebase
         dbref = Database.database().reference()
         guard let currentUser = currentUser else{
@@ -77,10 +90,6 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         self.summaryTableView.reloadData()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        self.summaryTableView.reloadData()
-    }
     
     // Table - Delegate Functions
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -99,25 +108,31 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
         if(indexPath.section == 0){
+            let fcell = summaryTableView.dequeueReusableCell(withIdentifier: "friendCell") as! FriendTableViewCell
             if friendData.count > 0 {
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
-                cell?.textLabel?.text = friend.nickName
+                fcell.friendLabel?.text = friend.nickName
                 friend.completePercent = friend.calculateCompletionRate()
                 print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
-                cell?.detailTextLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                fcell.friendIcon.image = UIImage(named: "iStar@1")
                 let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
-                let timage = UIImage(named: "message")?.withRenderingMode(.alwaysTemplate)
-                let msgBtn = UIButton()
-                msgBtn.setImage(timage, for: .normal)
-                msgBtn.tintColor = tintColors[tindex]
-                cell?.addSubview(msgBtn)
+                let timage = UIImage(named: "message@1")?.withRenderingMode(.alwaysTemplate)
+                fcell.msgButton.setImage(timage, for: .normal)
+                fcell.msgButton.tintColor = tintColors[tindex]
+                fcell.msgButton.addTarget(self, action: Selector(("msgFriend:")), for: .touchUpInside)
+                //fcell.msgButton.setTitle(friend.uid, for: .normal)
+                fcell.msgButton.tag = indexPath.row
+                return fcell
             }else{
+                let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
                 cell?.textLabel?.text = "No Friends Found"
-                cell?.detailTextLabel?.text = "Go to the Friends menu to add a friend."
+                cell?.detailTextLabel?.text = "Go to the Friends menu to add a  friend."
+                return cell!
             }
         }else if(indexPath.section == 1){
+            let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
             if goalData.count > 0 {
                 let goal = items[indexPath.section][indexPath.row] as! GoalModel
                 cell?.textLabel?.text = goal.goal_desc
@@ -127,11 +142,17 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 cell?.textLabel?.text = "No Goals Found"
                 cell?.detailTextLabel?.text = "Go to the Goals menu to create your first Goal."
             }
+            return cell!
         }else{
+            let cell = summaryTableView.dequeueReusableCell(withIdentifier: "cell")
             cell?.textLabel?.text = "Error"
             cell?.detailTextLabel?.text = "No data found"
+            return cell!
         }
-        return cell!
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 55
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -140,5 +161,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = #colorLiteral(red: 0.5571277142, green: 0.3138887882, blue: 0.4069343805, alpha: 0.5)
+    }
+    
+    // data functions
+    func getFriend(_ index : Int) -> FriendModel {
+        print("\(friendData[index])")
+        return friendData[index]
     }
 }

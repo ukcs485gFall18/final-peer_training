@@ -88,8 +88,6 @@ class BasicBarChart: UIView {
         
         /// Draw text below the bar
         drawTitle(xPos: xPos - space/2, yPos: mainLayer.frame.height - bottomSpace + 10, title: entry.title, color: entry.color)
-        print("bar xpos: \(xPos)")
-        print("bar xpos: \(xPos-space/2)")
     }
     
     private func drawBar(xPos: CGFloat, yPos: CGFloat, color: UIColor) {
