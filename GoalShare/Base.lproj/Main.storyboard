@@ -768,6 +768,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="kFO-CY-7za" kind="custom" identifier="GroupDetails" id="pzU-Bb-bUN"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -796,6 +799,34 @@
             </objects>
             <point key="canvasLocation" x="1766" y="1652"/>
         </scene>
+        <!--Group Details Table View Controller-->
+        <scene sceneID="bsB-JS-tVD">
+            <objects>
+                <tableViewController storyboardIdentifier="GroupDetailsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="kFO-CY-7za" customClass="GroupDetailsTableViewController" customModule="GoalShare" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vOu-Ry-dfE">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="gG2-Ke-KxF">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gG2-Ke-KxF" id="Dia-Om-B7E">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="kFO-CY-7za" id="sdb-T9-bEo"/>
+                            <outlet property="delegate" destination="kFO-CY-7za" id="clu-3c-LBd"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iuv-yK-rRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2609" y="1651"/>
+        </scene>
     </scenes>
     <resources>
         <image name="goals@1" width="25" height="25"/>
@@ -804,7 +835,6 @@
         <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fxe-0e-oqo"/>
         <segue reference="z1W-Mj-CVb"/>
         <segue reference="SUk-UJ-rjt"/>
         <segue reference="cRV-B4-fUf"/>

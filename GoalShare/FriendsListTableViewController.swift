@@ -105,6 +105,7 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
         }
         return cell!
     }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
     {
         if (section == 0) {
@@ -112,12 +113,42 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
         } else {
             return "My Groups"
         }
-
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.section)
+        if(indexPath.section == 1) {
+            self.performSegue(withIdentifier: "GroupDetails", sender: indexPath)
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "GroupDetails" {
+            let destination = (segue.destination as! GroupDetailsTableViewController)
+            print(destination)
+        }
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        //TODO center text
         view.tintColor = #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.9021476506)
     }
 }
 
-
+class GroupDetails: UIStoryboardSegue {
+    override func perform() {
+        let slideView = destination.view
+        source.view.addSubview(slideView!)
+        slideView?.transform = CGAffineTransform(translationX: source.view.frame.size.width, y: 0)
+        
+        UIView.animate(withDuration: 0.25,
+                       delay: 0.0,
+                       options: UIView.AnimationOptions.curveEaseInOut,
+                       animations: {
+                        slideView?.transform = CGAffineTransform.identity
+        }, completion: { finished in
+            
+            self.source.present(self.destination, animated: false, completion: nil)
+            slideView?.removeFromSuperview()
+        })
+    }
+}
