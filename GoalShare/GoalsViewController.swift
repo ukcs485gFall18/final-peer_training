@@ -1,9 +1,9 @@
 //
-//  GoalsViewController.swift
-//  GoalShare
+//  GoalsViewController.swift
+//  GoalShare
 //
-//  Created by Bryan Willis on 10/20/18.
-//  Copyright © 2018 Bryan Willis. All rights reserved.
+//  Created by Bryan Willis on 10/20/18.
+//  Copyright © 2018 Bryan Willis. All rights reserved.
 //
 
 import UIKit
@@ -11,23 +11,23 @@ import Firebase
 import FirebaseDatabase
 
 class GoalsViewController: UIViewController {
-
+    
     @IBOutlet weak var goalName: UITextField!
     @IBOutlet weak var goalDes: UITextField!
     @IBOutlet weak var groupName: UITextField!
     @IBOutlet weak var inviteFriends: UITextField!
     @IBOutlet weak var myswitch: UISwitch!
-    
 
-    
     var dbref : DatabaseReference!
     var handle: DatabaseHandle!
     var gid: Int!
     var groupId: Int!
     var uid: String!
+    var uname: String!
     var anyValue: AnyObject?
     var groupGoalFlag = 0
-    var uidsToAdd = [String]()
+    var uidsToAdd = [[String]]()
+    var tempArray = [String]()
     
     @IBAction func onAllAccessory(_ sender: UISwitch) {
         if myswitch.isOn == true {
@@ -51,25 +51,35 @@ class GoalsViewController: UIViewController {
                     let currentUserName = currentUser.childSnapshot(forPath: "uname")
                     if (NamesArr.contains(currentUserName.value as! Substring)) {
                         let currentUserId = currentUser.childSnapshot(forPath: "uid")
-                        self.uidsToAdd.append(currentUserId.value as! String)
+                        self.tempArray.append(currentUserId.value as! String)
+                        self.tempArray.append(currentUserName.value as! String)
+                        self.uidsToAdd.append(self.tempArray)
+                        self.tempArray.removeAll()
                     }
                 }
+            })
+            //Get the current users uname
+            dbref!.child("users").child(self.uid).queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
+                let children = snapshot.value as! [String: Any]
+                self.uname = children["uname"] as? String
             })
             //retrieve the max gid and groupId
             dbref!.child("MaxIDs").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
                 let children = snapshot.value as! [String: Any]
                 self.gid = children["gid"] as? Int
                 self.groupId = children["groupId"] as? Int
-                
+                //add the current users uid to the list
+                self.tempArray.append(self.uid)
+                self.tempArray.append(self.uname)
+                self.uidsToAdd.append(self.tempArray)
+                self.tempArray.removeAll()
                 //create the new group
                 self.dbref!.child("Groups").child(String(self.groupId)).setValue(["GroupName":self.groupName.text!,"uids":self.uidsToAdd])
                 //update the max gid and groupId
                 self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId+1])
-                //add the current users uid to the list
-                self.uidsToAdd.append(self.uid)
                 //add the goal to every member of the group
                 for index in self.uidsToAdd {
-                    self.dbref.child("Goals").child(String(index)).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])
+                    self.dbref.child("Goals").child(String(index[1])).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])
                 }
             })
         }
@@ -79,14 +89,13 @@ class GoalsViewController: UIViewController {
             dbref!.child("MaxIDs").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
                 let children = snapshot.value as! [String: Any]
                 self.gid = children["gid"] as? Int
-                
                 //update the max gid, but leave groupId at current value
                 self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId])
                 self.dbref.child("Goals").child(self.uid).child("goals").child(String(self.gid)).setValue(["completed":"false", "gid":self.gid, "gname":self.goalName.text!, "goal_des":self.goalDes.text!])
             })
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myswitch.isOn = false
@@ -97,3 +106,5 @@ class GoalsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 }
+
+
