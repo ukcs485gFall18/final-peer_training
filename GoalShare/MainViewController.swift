@@ -32,22 +32,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        for friend in friendData {
-            friend.completePercent = friend.calculateCompletionRate()
-        }
-        summaryTableView.reloadData()
-        
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        summaryTableView.reloadData()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(_ : true)
         summaryTableView.delegate = self
         summaryTableView.dataSource = self
-
+        
         // build reference to Firebase
         dbref = Database.database().reference()
         guard let currentUser = currentUser else{
@@ -66,12 +53,9 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                             goals.append(fgoal)
                         }
                         friend.goals = goals
-                        print("*** Count of friend goals = \(friend.goals.count)")
-                    })
-                    if(!self.friendData.contains(friend)){
                         friend.completePercent = friend.calculateCompletionRate()
-                        self.friendData.append(friend)
-                    }
+                    })
+                    self.friendData.append(friend)
                 }
                 self.items[0] = self.friendData
                 self.summaryTableView.reloadData()
@@ -88,7 +72,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.summaryTableView.reloadData()
             })
         }
-        self.summaryTableView.reloadData()
+        summaryTableView.reloadData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        summaryTableView.reloadData()
     }
     
     // Table - Delegate Functions
@@ -114,15 +102,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
                 fcell.friendLabel?.text = friend.nickName
                 friend.completePercent = friend.calculateCompletionRate()
-                print("*** \(friend.nickName) has completed \(friend.completePercent)% of their goals.")
                 fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
                 fcell.friendIcon.image = UIImage(named: "iStar@1")
                 let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
                 let timage = UIImage(named: "message@1")?.withRenderingMode(.alwaysTemplate)
                 fcell.msgButton.setImage(timage, for: .normal)
                 fcell.msgButton.tintColor = tintColors[tindex]
-                fcell.msgButton.addTarget(self, action: Selector(("msgFriend:")), for: .touchUpInside)
-                //fcell.msgButton.setTitle(friend.uid, for: .normal)
+                fcell.msgButton.setValue(friend.uid, forKey: "Title")
                 fcell.msgButton.tag = indexPath.row
                 return fcell
             }else{

@@ -116,9 +116,9 @@
 				FE1562C721B4456B00A7DB4A /* FriendModel.swift */,
 				FE8727B6217BFDC40094899D /* FriendsViewController.swift */,
 				CE1CA25121906D38008F9F33 /* FriendsListTableViewController.swift */,
+				2035BA6A21BD89B60057E920 /* FriendTableViewCell.swift */,
 				FE1562C921B4458400A7DB4A /* GoalModel.swift */,
 				FE8727B4217BFD7F0094899D /* GoalsViewController.swift */,
-				2035BA6A21BD89B60057E920 /* FriendTableViewCell.swift */,
 				CE1CA24F21905E7F008F9F33 /* GoalListViewController.swift */,
 				6E94C76021B48B5200C245D7 /* GoalDetailsViewController.swift */,
 				FE6FBA5621701F6800C9F4E6 /* StartViewController.swift */,
@@ -426,13 +426,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HCN9AC5X94;
+				DEVELOPMENT_TEAM = UF8JL6W2BC;
 				INFOPLIST_FILE = GoalShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cs485g.tutorial;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.slo234.GoalShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -449,13 +449,13 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HCN9AC5X94;
+				DEVELOPMENT_TEAM = UF8JL6W2BC;
 				INFOPLIST_FILE = GoalShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cs485g.tutorial;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.uky.cs.slo234.GoalShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;

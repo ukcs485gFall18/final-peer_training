@@ -44,7 +44,9 @@ class FriendModel : NSObject {
                     completeGoals += 1
                 }
             }
-            cRate = round(Double(completeGoals / totalGoals)) * 100
+            cRate = Double(completeGoals) / Double(totalGoals)
+            cRate = round(cRate * 100)
+            return cRate
         }
         return cRate
     }

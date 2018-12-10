@@ -36,12 +36,14 @@ class FriendTableViewCell: UITableViewCell {
         })
         
         // build message sender information from button
+        print("*** Button Title: \(sender.currentTitle ?? "No Value Found")")
         _ = dbref?.child("users").child(sender.currentTitle!).observe(.value, with: { (snapshot) in
             for snap in snapshot.children{
                 let friendSnap = snap as! DataSnapshot
                 let friendDict = friendSnap.value as! [String : Any]
                 self.fuid = friendDict["uid"] as! String
                 self.fname = friendDict["uname"] as! String
+                print("*** Friend Name \(self.fname) - \(self.fuid)")
             }
         })
         
