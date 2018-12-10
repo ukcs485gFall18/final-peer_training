@@ -15,6 +15,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var summaryTableView: UITableView!
     var dbref : DatabaseReference!
     let currentUser = Auth.auth().currentUser?.uid
+    var userName = ""
     var friendHandle : DatabaseHandle?
     var goalHandle : DatabaseHandle?
     
@@ -41,6 +42,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("/(curentUser) not defined.")
             fatalError("Current User is not defined.")
         }
+        dbref?.child("users").child(currentUser).observeSingleEvent(of: .value, with: {(snapshot) in
+            let dataDict = snapshot.value as! [String : Any]
+            self.userName = dataDict["uname"] as! String
+        })
         var goals = [GoalModel]()
         if(friendData.count == 0){
             friendHandle = dbref?.child("friends").child(currentUser).observe(.childAdded, with: { (snapshot) in
@@ -109,6 +114,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 fcell.msgButton.setImage(timage, for: .normal)
                 fcell.msgButton.tintColor = tintColors[tindex]
                 fcell.msgButton.setTitle(friend.uid, for: .normal)
+                fcell.msgButton.addTarget(self, action: #selector(msgFriend(_:)), for: .touchUpInside)
                 fcell.msgButton.tag = indexPath.row
                 return fcell
             }else{
@@ -153,5 +159,46 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func getFriend(_ index : Int) -> FriendModel {
         print("\(friendData[index])")
         return friendData[index]
+    }
+    
+    @objc func msgFriend(_ sender: UIButton){
+        //let userName = Auth.auth().currentUser?.displayName as! String;
+        let fname = friendData[sender.tag].nickName;
+        
+        // get information for logged in user and target friend
+        guard let currentUser = Auth.auth().currentUser?.uid else{
+            print("No authenticated user found. Please relogin.")
+            return
+        }
+        // build message sender information from button
+        guard let fuid = sender.currentTitle else{
+            print("Friend ID not found.")
+            return
+        }
+        
+        // set message date
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMddHHmmss"
+        let currentDate = formatter.string(from: date)
+        
+        let actionTitle = "Message to \(fname)"
+        // create controller with additional text field
+        let message = UIAlertController(title: "", message: "Send Message to \(fname)", preferredStyle: UIAlertController.Style.alert)
+        message.addTextField(configurationHandler: { (textField) in
+            textField.placeholder = "Message to \(fname)"
+            textField.text = "Keep up the good work!"
+        })
+        let messageAction: UIAlertAction = UIAlertAction(title: actionTitle, style: UIAlertAction.Style.default)
+        { (alertAction) -> Void in
+            let message = message.textFields![0].text!
+            
+            self.dbref.child("notifications").child(fuid).child(currentDate).setValue(["nid": currentDate, "fuid": currentUser, "fname": self.userName, "message": message, "isRead":false])
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel) { (alertAction) -> Void in
+        }
+        message.addAction(messageAction)
+        message.addAction(cancelAction)
+        self.present(message, animated: true, completion: nil)
     }
 }
