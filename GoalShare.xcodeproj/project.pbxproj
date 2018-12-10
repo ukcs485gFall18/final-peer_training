@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2035BA6B21BD89B60057E920 /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035BA6A21BD89B60057E920 /* FriendTableViewCell.swift */; };
-		2035BA6D21BDA8600057E920 /* GroupDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2035BA6C21BDA8600057E920 /* GroupDetailsTableViewController.swift */; };
+		20D3660B21BDC93200589BDC /* GroupDetailsSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3660A21BDC93200589BDC /* GroupDetailsSegue.swift */; };
+		20D3660D21BDD9DC00589BDC /* GroupDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3660C21BDD9DC00589BDC /* GroupDetailsViewController.swift */; };
 		6E94C76121B48B5200C245D7 /* GoalDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E94C76021B48B5200C245D7 /* GoalDetailsViewController.swift */; };
 		6E94C76321B49D4B00C245D7 /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E94C76221B49D4B00C245D7 /* BarChart.swift */; };
 		6E94C76521B49D9000C245D7 /* BarEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E94C76421B49D9000C245D7 /* BarEntry.swift */; };
@@ -34,7 +35,8 @@
 /* Begin PBXFileReference section */
 		07285C9FA3F1D52915605B45 /* Pods-GoalShare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GoalShare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GoalShare/Pods-GoalShare.debug.xcconfig"; sourceTree = "<group>"; };
 		2035BA6A21BD89B60057E920 /* FriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
-		2035BA6C21BDA8600057E920 /* GroupDetailsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsTableViewController.swift; sourceTree = "<group>"; };
+		20D3660A21BDC93200589BDC /* GroupDetailsSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsSegue.swift; sourceTree = "<group>"; };
+		20D3660C21BDD9DC00589BDC /* GroupDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsViewController.swift; sourceTree = "<group>"; };
 		3F1C482918C84738A9821742 /* Pods_GoalShare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GoalShare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E94C76021B48B5200C245D7 /* GoalDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalDetailsViewController.swift; sourceTree = "<group>"; };
 		6E94C76221B49D4B00C245D7 /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
@@ -126,7 +128,8 @@
 				6E94C76221B49D4B00C245D7 /* BarChart.swift */,
 				6E94C76421B49D9000C245D7 /* BarEntry.swift */,
 				FE6FBA5821701F6800C9F4E6 /* Main.storyboard */,
-				2035BA6C21BDA8600057E920 /* GroupDetailsTableViewController.swift */,
+				20D3660C21BDD9DC00589BDC /* GroupDetailsViewController.swift */,
+				20D3660A21BDC93200589BDC /* GroupDetailsSegue.swift */,
 				FE6FBA5E21701F6800C9F4E6 /* Assets.xcassets */,
 				FE6FBA6021701F6800C9F4E6 /* LaunchScreen.storyboard */,
 				FE6FBA6321701F6800C9F4E6 /* Info.plist */,
@@ -264,14 +267,15 @@
 				FE6FBA5721701F6800C9F4E6 /* StartViewController.swift in Sources */,
 				FE8727BB217C130E0094899D /* RegisterViewController.swift in Sources */,
 				FE6FBA5521701F6800C9F4E6 /* AppDelegate.swift in Sources */,
+				20D3660D21BDD9DC00589BDC /* GroupDetailsViewController.swift in Sources */,
 				FE6FBA5D21701F6800C9F4E6 /* GoalShare.xcdatamodeld in Sources */,
 				FE8727B7217BFDC40094899D /* FriendsViewController.swift in Sources */,
 				CE1CA25221906D38008F9F33 /* FriendsListTableViewController.swift in Sources */,
 				FE8727B5217BFD7F0094899D /* GoalsViewController.swift in Sources */,
 				FE8727BD217DCA150094899D /* MainViewController.swift in Sources */,
 				6E94C76321B49D4B00C245D7 /* BarChart.swift in Sources */,
-				2035BA6D21BDA8600057E920 /* GroupDetailsTableViewController.swift in Sources */,
 				6E94C76121B48B5200C245D7 /* GoalDetailsViewController.swift in Sources */,
+				20D3660B21BDC93200589BDC /* GroupDetailsSegue.swift in Sources */,
 				2035BA6B21BD89B60057E920 /* FriendTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
