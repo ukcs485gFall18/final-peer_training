@@ -116,8 +116,8 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             let currentUserId = Auth.auth().currentUser?.uid
             
             // Get text for current row
-            let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
-            let cellName = currentCell.textLabel!.text
+            let currentCell = tableView.cellForRow(at: indexPath)
+            let cellName = currentCell!.textLabel!.text
             
             // get current date
             let date = Date()
