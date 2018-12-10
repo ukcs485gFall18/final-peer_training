@@ -33,6 +33,7 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
     override func viewDidAppear(_ animated: Bool) {
         friendTableView.delegate = self
         friendTableView.dataSource = self
+        
         let currentUserId = Auth.auth().currentUser?.uid
 
         // build reference to Firebase
@@ -47,23 +48,25 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
                 self.friendTableView.reloadData()
             })
         }
-        ref!.child("Groups").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
-            for child in snapshot.children {
-                let currentGroupNumber = child as! DataSnapshot
-                let currentGroupName = currentGroupNumber.childSnapshot(forPath: "GroupName")
-                let usersInCurrentGroup = currentGroupNumber.childSnapshot(forPath: "uids")
-                for grandChild in usersInCurrentGroup.children {
-                    let currentUser = grandChild as! DataSnapshot
-                    let currentUserUid = currentUser.childSnapshot(forPath: "0")
-                    if (currentUserUid.value as! String == currentUserId!) {
-                        self.groupData.append(currentGroupName.value as! String)
-                        self.numOfMembersInGroups.append(String(usersInCurrentGroup.childrenCount))
+        if(groupData.count == 0) {
+            ref!.child("Groups").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
+                for child in snapshot.children {
+                    let currentGroupNumber = child as! DataSnapshot
+                    let currentGroupName = currentGroupNumber.childSnapshot(forPath: "GroupName")
+                    let usersInCurrentGroup = currentGroupNumber.childSnapshot(forPath: "uids")
+                    for grandChild in usersInCurrentGroup.children {
+                        let currentUser = grandChild as! DataSnapshot
+                        let currentUserUid = currentUser.childSnapshot(forPath: "0")
+                        if (currentUserUid.value as! String == currentUserId!) {
+                            self.groupData.append(currentGroupName.value as! String)
+                            self.numOfMembersInGroups.append(String(usersInCurrentGroup.childrenCount))
+                        }
                     }
+                    self.items[1] = self.groupData
+                    self.friendTableView.reloadData()
                 }
-                self.items[1] = self.groupData
-                self.friendTableView.reloadData()
-            }
-        })
+            })
+        }
         self.friendTableView.reloadData()
     }
     // Table - Delegate Functions
@@ -129,15 +132,14 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        //TODO center text
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         //header.textLabel?.font = UIFont(name: "YourFontname", size: 14.0)
         header.textLabel?.textAlignment = NSTextAlignment.center
         view.tintColor = #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.9021476506)
     }
     @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
-        let Scene = UIStoryboard(name: "Main", bundle:nil).instantiateViewController(withIdentifier: "FriendsViewController") as UIViewController
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        appDelegate.window?.rootViewController = Scene
+        dismiss(animated: true, completion: nil)
+        let yourArticleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FriendsViewController")
+        self.navigationController?.pushViewController(yourArticleViewController, animated: true)
     }
 }
