@@ -104,11 +104,11 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 friend.completePercent = friend.calculateCompletionRate()
                 fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
                 fcell.friendIcon.image = UIImage(named: "iStar@1")
-                let tindex = friend.completePercent == 0 ? 0 : Int(friend.completePercent / 20) - 1
+                let tindex = Int(friend.completePercent / 20) - 1 < 0 ? 0 : Int(friend.completePercent / 20) - 1
                 let timage = UIImage(named: "message@1")?.withRenderingMode(.alwaysTemplate)
                 fcell.msgButton.setImage(timage, for: .normal)
                 fcell.msgButton.tintColor = tintColors[tindex]
-                fcell.msgButton.setValue(friend.uid, forKey: "Title")
+                fcell.msgButton.setTitle(friend.uid, for: .normal)
                 fcell.msgButton.tag = indexPath.row
                 return fcell
             }else{
