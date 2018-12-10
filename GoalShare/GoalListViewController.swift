@@ -15,7 +15,6 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     var ref:DatabaseReference?
     var databaseHandle:DatabaseHandle?
     var completedHandle:DatabaseHandle?
-    
     var goalData = [GoalModel]()
     var postData = [String]()
     var sendGoal: GoalModel?

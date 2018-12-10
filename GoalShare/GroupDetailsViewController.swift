@@ -17,6 +17,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
     var groupId: String?
     var friendIds = [String]()
     var groupGoalId: Int?
+    var sendInfo = [String]()
     var ref:DatabaseReference?
     var friendData = [String]()
     var tintColors = [ #colorLiteral(red: 0.3182998379, green: 0.3019897466, blue: 0.4855987017, alpha: 0.9021476506), #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.9021476506), #colorLiteral(red: 0.3869009155, green: 0.696799651, blue: 0.3262433093, alpha: 0.9021476506), #colorLiteral(red: 0.696799651, green: 0.04511301659, blue: 0.0009451018385, alpha: 0.9021476506), #colorLiteral(red: 0.7189426104, green: 0.71675867, blue: 0.27614689, alpha: 0.9021476506) ]
@@ -35,8 +36,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
                 for child in snapshot.children {
                     let currentGroupId = child as! DataSnapshot
                     let currentGroupName = currentGroupId.childSnapshot(forPath: "GroupName")
-//                    let currentGoalId = currentGroupId.childSnapshot(forPath: "gid")
-//                    self.groupGoalId = currentGoalId.value as? Int
+                    let currentGoalId = currentGroupId.childSnapshot(forPath: "gid")
+                    self.groupGoalId = currentGoalId.value as? Int
                     if (self.groupName == currentGroupName.value as? String) {
                         self.groupId = currentGroupId.key
                         let users = currentGroupId.childSnapshot(forPath: "uids")
@@ -44,7 +45,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
                             let currentFriendInfo = grandChild as! DataSnapshot
                             let currentFriendName = currentFriendInfo.childSnapshot(forPath: "1")
                             self.friendData.append(currentFriendName.value as! String)
-                            self.friendIds.append(currentFriendInfo.childSnapshot(forPath: "2").value as! String)
+                            self.friendIds.append(currentFriendInfo.childSnapshot(forPath: "0").value as! String)
                         }
                     }
                 }
@@ -100,30 +101,30 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
         var selectedUId: String?
         // segue to details, pass array with [friendId,gid]
         
+        let stringGoalId = String(self.groupGoalId!)
+        
         // get friendId
         for uid in self.friendIds {
             ref?.child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
                 //let childData = child as! DataSnapshot
                 let currentUIdSnap = snapshot.childSnapshot(forPath: "uid")
-                let currentUNameSnap = snapshot.childSnapshot(forPath: "GroupName")
+                let currentUNameSnap = snapshot.childSnapshot(forPath: "uname")
                 let currentUId = currentUIdSnap.value as! String
                 let currentUName = currentUNameSnap.value as! String
                 if (currentUName == userName){
                     selectedUId = currentUId
+                    self.sendInfo = [selectedUId!,stringGoalId]
                 }
-                let stringGoalId = String(self.groupGoalId!)
-                //let sendInfo = [self.]
+                if self.sendInfo.count != 0 {
+                    self.performSegue(withIdentifier: "groupGoalDescription", sender: self.sendInfo)
+                }
             })
         }
-        
-//        self.performSegue(withIdentifier: "goalDescription", sender: cellName)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let secondVC = segue.destination as? GoalDetailsViewController else {return}
-//        let stringGoalId = String(self.groupGoalId!)
-//        let sendInfo = [self.]
-//        secondVC.sentGoal = sendGoal
+        secondVC.sentGroup = sendInfo
     }
     
     /*
