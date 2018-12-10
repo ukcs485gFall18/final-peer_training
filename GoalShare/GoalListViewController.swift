@@ -58,32 +58,27 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
         //Set current user ID
         let currentUserId = Auth.auth().currentUser?.uid
         
-        //****
-        // This section is for resetting goals to false if they haven't been completed today
-        // I started on it but realized it's low priority so it is unfinished
-        //****
-//        //get current date
-//        let date = Date()
-//        let formatter = DateFormatter()
-//        formatter.dateFormat = "yyyyMMdd"
-//        let currentDate = formatter.string(from: date)
-//
-//        databaseHandle = ref?.child("goalHistory").child(currentUserId!).observe(.value, with: { (snapshot) in
-//            for gid in snapshot.children {
-//                let gidSnap = gid as! DataSnapshot
-//                var completed = false
-//                for date in gidSnap.children {
-//                    let dateSnap = date as! DataSnapshot
-//                    if (dateSnap.key == currentDate){
-//                        completed = true
-//                    }
-//                }
-//                if (completed == false) {
-//                    // Set value to false
-//                    //self.ref!.child("goals").child(cellName!).child("uids").child(currentUserId!).setValue(["completed":"true"])
-//                }
-//            }
-//        })
+        // reset goals to false if they haven't been completed today
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyyMMdd"
+        let currentDate = formatter.string(from: date)
+
+        databaseHandle = ref?.child("goalHistory").child(currentUserId!).observe(.value, with: { (snapshot) in
+            for gid in snapshot.children {
+                let gidSnap = gid as! DataSnapshot
+                var completed = false
+                for date in gidSnap.children {
+                    let dateSnap = date as! DataSnapshot
+                    if (dateSnap.key == currentDate){
+                        completed = true
+                    }
+                }
+                if (completed == false) {
+                    self.ref!.child("Goals").child(currentUserId!).child("goals").child(gidSnap.key).updateChildValues(["completed":"false"])
+                }
+            }
+        })
         
         // fill goalData with user's goals and append gnames to postData
         databaseHandle = self.ref?.child("Goals").child(currentUserId!).child("goals").observe(.value, with: { (goalSnapshot) in
@@ -124,10 +119,6 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             let currentCell = tableView.cellForRow(at: indexPath) as! UITableViewCell
             let cellName = currentCell.textLabel!.text
             
-            // Set value to true
-            //self.ref!.child("Goals").child(currentUserId!).child().setValue(["completed":"true"])
-            
-            // store in log
             // get current date
             let date = Date()
             let formatter = DateFormatter()
@@ -137,7 +128,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             // mark as completed, and then log data
             for goals in self.goalData{
                 if(goals.goalName == cellName){
-                self.ref!.child("Goals").child(currentUserId!).child("goals").child(String(goals.gid)).setValue(["completed":"true","gid":goals.gid,"gname":goals.goalName,"goal_des":goals.goal_desc])
+                    self.ref!.child("Goals").child(currentUserId!).child("goals").child(String(goals.gid)).setValue(["completed":"true","gid":goals.gid,"gname":goals.goalName,"goal_des":goals.goal_desc])
                     self.ref?.child("goalHistory").child(currentUserId!).child(String(goals.gid)).child(currentDate).setValue(["true"])
                 }
             }

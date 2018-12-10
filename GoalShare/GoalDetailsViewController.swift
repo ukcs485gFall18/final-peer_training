@@ -235,7 +235,7 @@ class GoalDetailsViewController: UIViewController {
                     usedDate = formatter.string(from: dateToChange)
                 }
             }
-            //self.barValues = [2,4,4,5,7,8,21,30,12,15,20,5]
+            self.barValues = [2,4,4,5,7,8,21,30,12,15,20,5]
             let dataEntries = self.generateYearGraph(barValues: self.barValues)
             self.BarChart.dataEntries = dataEntries
         })
