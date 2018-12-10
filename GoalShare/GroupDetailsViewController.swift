@@ -90,7 +90,7 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         //TODO center text
-        view.tintColor = #colorLiteral(red: 0.696799651, green: 0.04511301659, blue: 0.0009451018385, alpha: 0.9021476506)
+        view.tintColor = #colorLiteral(red: 0.696799651, green: 0.04511301659, blue: 0.0009451018385, alpha: 0.65)
     }
     
     // when a row is selected, segue to goal details vc for that specific user
@@ -99,8 +99,9 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
         let currentCell = tableView.cellForRow(at: indexPath)
         let userName = currentCell!.textLabel!.text
         var selectedUId: String?
-        // segue to details, pass array with [friendId,gid]
         
+        // segue to details, pass array with [friendId,gid]
+        var segueHappened = false
         let stringGoalId = String(self.groupGoalId!)
         
         // get friendId
@@ -115,7 +116,8 @@ class GroupDetailsViewController: UIViewController, UITableViewDelegate, UITable
                     selectedUId = currentUId
                     self.sendInfo = [selectedUId!,stringGoalId]
                 }
-                if self.sendInfo.count != 0 {
+                if (self.sendInfo.count != 0 && segueHappened == false){
+                    segueHappened = true
                     self.performSegue(withIdentifier: "groupGoalDescription", sender: self.sendInfo)
                 }
             })

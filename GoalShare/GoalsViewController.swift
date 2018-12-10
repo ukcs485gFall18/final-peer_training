@@ -79,7 +79,7 @@ class GoalsViewController: UIViewController {
                 self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId+1])
                 //add the goal to every member of the group
                 for index in self.uidsToAdd {
-                    self.dbref.child("Goals").child(String(index[1])).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])
+                    self.dbref.child("Goals").child(String(index[0])).child("goals").child(String(self.gid)).setValue(["completed":"false","gid":self.gid,"gname":self.goalName.text!,"goal_des":self.goalDes.text!])
                 }
             })
         }

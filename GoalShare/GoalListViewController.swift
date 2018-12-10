@@ -132,7 +132,7 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
                 }
             }
         }
-        complete.backgroundColor = .lightGray
+        complete.backgroundColor = #colorLiteral(red: 0.3869009155, green: 0.696799651, blue: 0.3262433093, alpha: 0.75)
         
         let details = UITableViewRowAction(style: .normal, title: "Details") { action, index in
             
@@ -149,9 +149,8 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
             
             // segue to description
             self.performSegue(withIdentifier: "goalDescription", sender: cellName)
-            print("details button tapped")
         }
-        details.backgroundColor = .orange
+        details.backgroundColor = #colorLiteral(red: 0.7189426104, green: 0.71675867, blue: 0.27614689, alpha: 0.75)
         
         return [complete, details]
     }
@@ -159,6 +158,15 @@ class GoalListViewController: UIViewController, UITableViewDelegate, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let secondVC = segue.destination as? GoalDetailsViewController else {return}
         secondVC.sentGoal = sendGoal
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+    {
+        return "Goals"
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = #colorLiteral(red: 0.3182998379, green: 0.3019897466, blue: 0.4855987017, alpha: 0.65)
     }
     /*
      // MARK: - Navigation

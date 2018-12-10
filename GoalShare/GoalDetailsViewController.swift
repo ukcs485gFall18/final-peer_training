@@ -41,12 +41,21 @@ class GoalDetailsViewController: UIViewController {
         
         // change settings if being sent by group view
         if (self.sentGroup.count != 0) {
-            getDataFromGroup()
+            self.currentUserId = self.sentGroup[0]
+            let sentGoalId = self.sentGroup[1]
+            // fill sentGoal with goal info
+            databaseHandle = self.ref!.child("Goals").child(currentUserId!).child("goals").child(sentGoalId).observe(.value, with: { (snapshot) in
+                let goalWasSent = GoalModel(snap: snapshot as! DataSnapshot)
+                self.sentGoal = goalWasSent
+                self.GoalName.text = self.sentGoal?.goalName
+                self.GoalDes.text = self.sentGoal?.goal_desc
+                self.getWeekData()
+            })
         } else {
             GoalName.text = sentGoal?.goalName
             GoalDes.text = sentGoal?.goal_desc
+            getWeekData()
         }
-        getWeekData()
     }
     
     // Function that generates week graph
@@ -174,7 +183,6 @@ class GoalDetailsViewController: UIViewController {
     
     // gets goal completion data over the past week and passes into graphing function
     func getWeekData(){
-        getDataFromGroup()
         databaseHandle = self.ref!.child("goalHistory").child(currentUserId!).child(String(sentGoal!.gid)).observe(.value, with: {(dateSnapshot) in
             // Set the date of 6 days ago in proper format
             let todayDate = Date()
@@ -243,35 +251,15 @@ class GoalDetailsViewController: UIViewController {
                     usedDate = formatter.string(from: dateToChange)
                 }
             }
-            self.barValues = [2,4,4,5,7,8,21,30,12,15,20,5]
+            // Uncomment the following line to fill the 'year' graph with test values
+            //self.barValues = [2,4,4,5,7,8,21,30,12,15,20,5]
             let dataEntries = self.generateYearGraph(barValues: self.barValues)
             self.BarChart.dataEntries = dataEntries
         })
     }
     
-    func getDataFromGroup() {
-        // set uid to friend's uid
-        self.currentUserId = self.sentGroup[0]
-        let sentGoalId = self.sentGroup[1]
-        // fill sentGoal with goal info
-        // need goal_desc, complete, goalName, gid
-        print("Goals")
-        print(self.currentUserId!)
-        print("goals")
-        print(sentGoalId)
-        databaseHandle = self.ref!.child("Goals").child(self.currentUserId!).child("goals").child(sentGoalId).observe(.value, with: {(snapshot) in
-            let completedSnap = snapshot.childSnapshot(forPath: "completed")
-            let gnameSnap = snapshot.childSnapshot(forPath: "gname")
-            let goal_desSnap = snapshot.childSnapshot(forPath: "goal_des")
-            let completed = completedSnap.value as! String
-            let gname = gnameSnap.value as! String
-            let goal_des = goal_desSnap.value as! String
-            
-            self.sentGoal?.complete = completed
-            self.sentGoal?.gid = sentGoalId as! Int
-            self.sentGoal?.goalName = gname
-            self.sentGoal?.goal_desc = goal_des
-        })
+    @objc func tapButton(){
+        print("tapped")
     }
     /*
     // MARK: - Navigation

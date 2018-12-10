@@ -88,6 +88,7 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
             if friendData.count > 0 {
                 cell?.textLabel?.text = friendData[indexPath.row]
                 cell?.detailTextLabel?.text = ""
+                cell?.isUserInteractionEnabled = false
             } else{
                 cell?.textLabel?.text = "No Friends Found"
             }
@@ -119,13 +120,15 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
         if(indexPath.section == 1) {
             let selected = friendTableView.cellForRow(at: indexPath)
             valueToPass = selected?.textLabel?.text
-            self.performSegue(withIdentifier: "GroupDetails", sender: self)
+            //self.performSegue(withIdentifier: "GroupDetails", sender: self)
+            self.performSegue(withIdentifier: "GroupTestSegue", sender: self)
         } else {
             valueToPass = "None"
         }
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "GroupDetails" {
+        //if segue.identifier == "GroupDetails" {
+        if segue.identifier == "GroupTestSegue" {
             let viewController = segue.destination as! GroupDetailsViewController
             viewController.groupName = valueToPass
         }
@@ -135,11 +138,11 @@ class FriendsListTableViewController: UIViewController, UITableViewDelegate, UIT
         let header: UITableViewHeaderFooterView = view as! UITableViewHeaderFooterView
         //header.textLabel?.font = UIFont(name: "YourFontname", size: 14.0)
         header.textLabel?.textAlignment = NSTextAlignment.center
-        view.tintColor = #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.9021476506)
+        view.tintColor = #colorLiteral(red: 0.21545305, green: 0.4786607049, blue: 0.5639418172, alpha: 0.65)
     }
-    @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
-        dismiss(animated: true, completion: nil)
-        let yourArticleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FriendsViewController")
-        self.navigationController?.pushViewController(yourArticleViewController, animated: true)
-    }
+//    @IBAction func unwindToVC1(segue:UIStoryboardSegue) {
+//        dismiss(animated: true, completion: nil)
+//        let yourArticleViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FriendsViewController")
+//        self.navigationController?.pushViewController(yourArticleViewController, animated: true)
+//    }
 }

@@ -200,19 +200,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cwp-AQ-vs1">
-                                <rect key="frame" x="16" y="179" width="343" height="30"/>
+                                <rect key="frame" x="16" y="135" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Goal Description" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3V7-nX-wiA">
-                                <rect key="frame" x="16" y="217" width="343" height="30"/>
+                                <rect key="frame" x="16" y="173" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oCx-ga-FTg">
-                                <rect key="frame" x="16" y="540" width="343" height="54"/>
+                                <rect key="frame" x="16" y="496" width="343" height="54"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="35"/>
                                 <state key="normal" title="Done">
                                     <color key="titleColor" red="0.66021696891191706" green="0.12731519283116863" blue="0.42219195139488264" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -223,31 +223,31 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Goal" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dhm-jB-KVN">
-                                <rect key="frame" x="16" y="125" width="343" height="30"/>
+                                <rect key="frame" x="16" y="81" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Group Goal:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBL-6Y-Qxv">
-                                <rect key="frame" x="16" y="262" width="92" height="21"/>
+                                <rect key="frame" x="16" y="218" width="92" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ihm-Gn-De3">
-                                <rect key="frame" x="124" y="262" width="51" height="31"/>
+                                <rect key="frame" x="124" y="218" width="51" height="31"/>
                                 <connections>
                                     <action selector="onAllAccessory:" destination="C7u-zc-VGr" eventType="valueChanged" id="509-Gm-UyO"/>
                                 </connections>
                             </switch>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Group Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ari-ev-k2s">
-                                <rect key="frame" x="16" y="308" width="343" height="30"/>
+                                <rect key="frame" x="16" y="264" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Invite Friends" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wp8-wn-l2H">
-                                <rect key="frame" x="16" y="353" width="343" height="30"/>
+                                <rect key="frame" x="16" y="309" width="343" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="20"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -767,9 +767,6 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="TLe-eg-PPc" kind="custom" identifier="GroupDetails" customClass="GroupDetailsSegue" customModule="GoalShare" customModuleProvider="target" id="M0H-Ml-5Yg"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -792,6 +789,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="friendTableView" destination="pEJ-4z-vLd" id="gJO-T2-gWh"/>
+                        <segue destination="TLe-eg-PPc" kind="show" identifier="GroupTestSegue" id="Nxa-w3-Mft"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7kl-5b-i1M" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -837,14 +835,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRJ-kO-B11">
-                                <rect key="frame" x="0.0" y="36" width="375" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="     Back"/>
-                                <connections>
-                                    <segue destination="vyc-ML-UG4" kind="unwind" unwindAction="unwindToVC1WithSegue:" id="6iu-FS-FvZ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="6l6-zQ-4Df"/>
@@ -865,9 +855,8 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qa0-QX-Ewa" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="vyc-ML-UG4" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2900" y="1651"/>
+            <point key="canvasLocation" x="3175" y="1651"/>
         </scene>
     </scenes>
     <resources>
@@ -877,9 +866,10 @@
         <image name="usergroups@1" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="fxe-0e-oqo"/>
         <segue reference="z1W-Mj-CVb"/>
         <segue reference="agG-JO-TN1"/>
-        <segue reference="SUk-UJ-rjt"/>
+        <segue reference="xLF-yF-LNk"/>
         <segue reference="cRV-B4-fUf"/>
         <segue reference="6qa-2Q-2fL"/>
     </inferredMetricsTieBreakers>
