@@ -82,6 +82,38 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     override func viewDidAppear(_ animated: Bool) {
         summaryTableView.reloadData()
+        
+        // pull and display notifications in an alert
+        var notifications = [String]()
+        var alertText = ""
+        dbref = Database.database().reference()
+        guard let currentUser = currentUser else{
+            print("/(curentUser) not defined.")
+            fatalError("Current User is not defined.")
+        }
+        
+        dbref?.child("notifications").child(currentUser).observe(.childAdded, with: { (snapshot) in
+            let noticeDict = snapshot.value as! [String: Any]
+            let sender = noticeDict["fname"] as! String
+            let message = noticeDict["message"] as! String
+            let nid = noticeDict["nid"] as! String
+            alertText = alertText + "\(sender) says \"\(message)\"\n"
+            notifications.append(nid)
+            //self.dbref.child("notifications").child(currentUser).child(nid).setValue(["isRead": "true"])
+            print("*** Alert Text - \(alertText)")
+            
+            let actionTitle = "Carrots and Sticks"
+            // create controller with additional text field
+            let notices = UIAlertController(title: actionTitle, message: alertText, preferredStyle: UIAlertController.Style.alert)
+            let noticeAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+            { (alertAction) -> Void in
+                for nid in notifications{
+                    self.dbref.child("notifications").child(currentUser).child("\(nid)/isRead").setValue(true)
+                }
+            }
+            notices.addAction(noticeAction)
+            self.present(notices, animated: true, completion: nil)
+        })
     }
     
     // Table - Delegate Functions
