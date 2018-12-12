@@ -89,6 +89,7 @@ class GoalsViewController: UIViewController {
             dbref!.child("MaxIDs").queryOrderedByKey().observeSingleEvent(of: .value, with: {(snapshot) in
                 let children = snapshot.value as! [String: Any]
                 self.gid = children["gid"] as? Int
+                self.groupId = children["groupId"] as? Int
                 //update the max gid, but leave groupId at current value
                 self.dbref.child("MaxIDs").setValue(["gid":self.gid+1,"groupId":self.groupId])
                 self.dbref.child("Goals").child(self.uid).child("goals").child(String(self.gid)).setValue(["completed":"false", "gid":self.gid, "gname":self.goalName.text!, "goal_des":self.goalDes.text!])
