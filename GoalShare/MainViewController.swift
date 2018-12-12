@@ -140,7 +140,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
                 let friend = items[indexPath.section][indexPath.row] as! FriendModel
                 fcell.friendLabel?.text = friend.nickName
                 friend.completePercent = friend.calculateCompletionRate()
-                fcell.friendDetailLabel?.text = "\(friend.nickName) has completed \(friend.completePercent)% of their goals."
+                fcell.friendDetailLabel?.text = "\(friend.nickName) completed \(friend.completePercent)%!"
                 fcell.friendIcon.image = UIImage(named: "iStar@1")
                 let tindex = Int(friend.completePercent / 20) - 1 < 0 ? 0 : Int(friend.completePercent / 20) - 1
                 let timage = UIImage(named: "message@1")?.withRenderingMode(.alwaysTemplate)
