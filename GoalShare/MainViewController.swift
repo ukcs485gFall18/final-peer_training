@@ -92,7 +92,8 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             fatalError("Current User is not defined.")
         }
         
-        dbref?.child("notifications").child(currentUser).observe(.childAdded, with: { (snapshot) in
+        let query = dbref?.child("notifications").child(currentUser).queryOrdered(byChild: "isRead").queryEqual(toValue: false)
+        query?.observe(.childAdded, with: { (snapshot) in
             let noticeDict = snapshot.value as! [String: Any]
             let sender = noticeDict["fname"] as! String
             let message = noticeDict["message"] as! String
